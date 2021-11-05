@@ -43,7 +43,7 @@ class UsuarioRol{
                 if($res>0){
                     $row = $base->Registro();
                     $this->setear($row['idusuario'], $row['idrol']);
-                    
+                    //TODO: fix
                 }
             }
         } else {
@@ -118,6 +118,7 @@ class UsuarioRol{
             if($res>0){
                 
                 while ($row = $base->Registro()){
+                    //TODO: another fix usuariorol
                     $obj= new Rol();
                     $obj->setear($row['idusuario'], $row['idrol']);
                     array_push($arreglo, $obj);
