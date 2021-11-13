@@ -2,7 +2,6 @@
 include_once("../../config.php");
 $session = new Session();
 $controller = new RolController();
-var_dump($_SESSION);
 if (!$session->activa()) {
     header('location: login.php');
     exit();

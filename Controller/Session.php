@@ -62,7 +62,7 @@ class Session
     {
         $usuario = null;
         $controllerUsuario = new UsuarioController();
-        $list = $controllerUsuario->buscar(["idUsuario" => $_SESSION["idUsuario"]]);
+        $list = $controllerUsuario->buscar(["idusuario" => $_SESSION["idUsuario"]]);
         if (count($list) > 0) {
             $usuario = $list[0];
         }
@@ -106,6 +106,7 @@ class Session
         $close = false;
         if (session_destroy()) {
             $close = true;
+            session_unset();
         }
         return $close;
     }

@@ -40,7 +40,7 @@ class RolController
     public function alta($param)
     {
         $resp = false;
-        $param['idrol']=null;
+        $param['idrol'] = null;
         $elObjtRol = $this->cargarObjeto($param);
         if ($elObjtRol != null and $elObjtRol->insertar()) {
             $resp = true;
@@ -48,14 +48,14 @@ class RolController
         return $resp;
     }
 
-  
+
     public function baja($param)
     {
         $resp = false;
-        if ($this->seteadosCamposClaves($param)){
+        if ($this->seteadosCamposClaves($param)) {
             $elObjtRol = $this->cargarObjetoConClave($param);
-            if ($elObjtRol!=null){
-                if ($elObjtRol->eliminar()){
+            if ($elObjtRol != null) {
+                if ($elObjtRol->eliminar()) {
                     $resp = true;
                 }
             }
@@ -75,7 +75,7 @@ class RolController
         return $resp;
     }
 
-  
+
     public function buscar($param)
     {
         $where = " true ";
@@ -84,8 +84,8 @@ class RolController
                 $where .= " and idrol =" . $param['idrol'];
             }
 
-            if (isset($param['rodescripcion'])) {
-                $where .= " and rodescripcion ='" . $param['rodescripcion'] . "'";
+            if (isset($param['roldescripcion'])) {
+                $where .= " and roldescripcion ='" . $param['roldescripcion'] . "'";
             }
 
         }

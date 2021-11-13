@@ -1,21 +1,22 @@
 <?php
+
 class Rol
 {
     private $idrol;
-    private $rodescripcion;
+    private $roldescripcion;
     private $mensajeoperacion;
 
     public function __construct()
     {
         $this->idrol = "";
-        $this->rodescripcion = "";
+        $this->roldescripcion = "";
         $this->mensajeoperacion = "";
     }
 
-    public function setear($idrol, $rodescripcion)
+    public function setear($idrol, $roldescripcion)
     {
         $this->idrol = $idrol;
-        $this->rodescripcion = $rodescripcion;
+        $this->roldescripcion = $roldescripcion;
     }
 
     public function cargar()
@@ -28,7 +29,7 @@ class Rol
             if ($res > -1) {
                 if ($res > 0) {
                     $row = $base->Registro();
-                    $this->setear($row['idrol'], $row['rodescripcion']);
+                    $this->setear($row['idrol'], $row['roldescripcion']);
 
                 }
             }
@@ -42,7 +43,7 @@ class Rol
     {
         $resp = false;
         $base = new BaseDatos();
-        $sql = "INSERT INTO rol(rodescripcion)  VALUES('" . $this->getRodescripcion() . "');";
+        $sql = "INSERT INTO rol(roldescripcion)  VALUES('" . $this->getRoldescripcion() . "');";
         if ($base->Iniciar()) {
             if ($elid = $base->Ejecutar($sql)) {
                 $this->setIdrol($elid);
@@ -60,7 +61,7 @@ class Rol
     {
         $resp = false;
         $base = new BaseDatos();
-        $sql = "UPDATE rol SET rodescripcion='" . $this->getRodescripcion() . "' WHERE idrol=" . $this->getIdrol();
+        $sql = "UPDATE rol SET roldescripcion='" . $this->getRoldescripcion() . "' WHERE idrol=" . $this->getIdrol();
         if ($base->Iniciar()) {
             if ($base->Ejecutar($sql)) {
                 $resp = true;
@@ -104,14 +105,12 @@ class Rol
 
                 while ($row = $base->Registro()) {
                     $obj = new Rol();
-                    $obj->setear($row['idrol'], $row['rodescripcion']);
+                    $obj->setear($row['idrol'], $row['roldescripcion']);
                     array_push($arreglo, $obj);
                 }
 
             }
 
-        } else {
-            $this->setmensajeoperacion("rol->listar: " . $base->getError());
         }
         return $arreglo;
     }
@@ -126,14 +125,14 @@ class Rol
         $this->idrol = $idrol;
     }
 
-    public function getRodescripcion()
+    public function getRoldescripcion()
     {
-        return $this->rodescripcion;
+        return $this->roldescripcion;
     }
 
-    public function setRodescripcion($rodescripcion)
+    public function setRoldescripcion($roldescripcion)
     {
-        $this->rodescripcion = $rodescripcion;
+        $this->roldescripcion = $roldescripcion;
     }
 
     public function getMensajeoperacion()
