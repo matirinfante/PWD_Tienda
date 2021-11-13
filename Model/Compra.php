@@ -2,13 +2,13 @@
 class Compra{
     private $idcompra;
     private $cofecha;
-    private $idusuario;
+    private $objUsuario;
     private $mensajeoperacion;
 
     public function __construct(){
         $this->idcompra="";
         $this->cofecha=null;
-        $this->idusuario="";
+        $this->objUsuario=null;
         $this->mensajeoperacion="";
     }
     public function getIdcompra(){
@@ -25,11 +25,11 @@ class Compra{
         $this->cofecha = $valor;
     }
 
-    public function getIdusuario(){
-        return $this->idusuario;
+    public function getObjUsuario(){
+        return $this->objUsuario;
     }
     public function setIdusuario($valor){
-        $this->idusuario = $valor;
+        $this->objUsuario = $valor;
     }
     
     public function getMensajeoperacion(){
@@ -39,10 +39,10 @@ class Compra{
         $this->mensajeoperacion = $mensajeoperacion;
     }
 
-    public function setear($idcompra, $cofecha, $idusuario){
+    public function setear($idcompra, $cofecha, $objUsuario){
         $this->setIdcompra($idcompra);
         $this->setCofecha($cofecha);
-        $this->setIdusuario($idusuario);
+        $this->setIdusuario($objUsuario);
     }
     
     
@@ -55,7 +55,14 @@ class Compra{
             if($res>-1){
                 if($res>0){
                     $row = $base->Registro();
-                    $this->setear($row['idcompra'], $row['cofecha'], $row['idusuario']);
+                    $usuarioController = new UsuarioController();
+                    $objUsuario = $usuarioController->buscar(['idusuario' => $row['idusuario']]);
+                    if (empty($objUsuario)) {
+                        $objUsuario = null;
+                    } else {
+                        $objUsuario = $objUsuario[0];
+                    }
+                    $this->setear($row['idcompra'], $row['cofecha'], $objUsuario);
                     
                 }
             }
@@ -119,29 +126,35 @@ class Compra{
         return $resp;
     }
     
-    public  function listar($parametro=""){
+    public static function listar($parametro = "")
+    {
         $arreglo = array();
-        $base=new BaseDatos();
-        $sql="SELECT * FROM compra ";
-        if ($parametro!="") {
-            $sql.='WHERE '.$parametro;
+        $base = new BaseDatos();
+        $sql = "SELECT * FROM compra ";
+        if ($parametro != "") {
+            $sql .= 'WHERE ' . $parametro;
         }
         $res = $base->Ejecutar($sql);
-        if($res>-1){
-            if($res>0){
-                
-                while ($row = $base->Registro()){
-                    $obj= new Rol();
-                    $obj->setear($row['idcompra'], $row['cofecha'], $row['idusuario']);
+        if ($res > -1) {
+            if ($res > 0) {
+
+                while ($row = $base->Registro()) {
+                    $obj = new Compra();
+                    $usuarioController = new UsuarioController();
+                    $objUsuario = $usuarioController->buscar(['idusuario' => $row['idusuario']]);
+
+                    if (empty($objUsuario)) {
+                        $objUsuario = null;
+                    } else {
+                        $objUsuario = $objUsuario[0];
+                    }
+                    $obj->setear($row['idcompra'], $row['cofecha'], $objUsuario);
                     array_push($arreglo, $obj);
                 }
-                
             }
-            
         } else {
-            // $this->setmensajeoperacion("Tabla->listar: ".$base->getError());
+            $this->setmensajeoperacion("Compra->listar: " . $base->getError());
         }
-        
         return $arreglo;
     }
     
