@@ -1,7 +1,7 @@
 <?php
 include_once("../../config.php");
 $data = data_submitted();
-//$session = new Session();
+$session = new Session();
 //var_dump($_SESSION);
 include_once("../structure/header.php");
 ?>
