@@ -2,96 +2,83 @@
 
 class UsuarioRolController
 {
-    public function cargarObjeto($param){
 
+    private function cargarObjeto($param)
+    {
         $obj = null;
 
-        if (array_key_exists('idrol', $param) ) {
-
+        if (array_key_exists('idusuario', $param) and array_key_exists('idrol', $param)) {
+            $objUsuario = new Usuario();
+            $objUsuario->setIdusuario($param['idusuario']);
+            $objUsuario->cargar();
+            $objRol = new Rol();
+            $objRol->setIdrol($param['idrol']);
+            $objRol->cargar();
             $obj = new UsuarioRol();
-
-            $obj->setear($param['idusuario'], $param['idrol']);
-
+            $obj->setear($objUsuario, $objRol);
         }
         return $obj;
     }
 
-    private function cargarObjetoConClave($param){
-        $obj = null;
 
-        if (isset($param['idusuario'])) {
-            $obj = new UsuarioRol();
-            $obj->setear($param['idusuario'], null);
-
-        }
-        return $obj;
-    }
-
-    private function seteadosCamposClaves($param){
-
+    private function seteadosCamposClaves($param)
+    {
         $resp = false;
-        if (isset($param['idusuario']))
-
+        if (isset($param['idusuario']) && isset($param['idrol']))
             $resp = true;
         return $resp;
     }
 
-    public function insertar($param){
-
+    public function alta($param)
+    {
         $resp = false;
-        $elObjtUsuarioRol = new UsuarioRol();
-        $elObjtUsuarioRol = $this->cargarObjeto($param);
-
-        if ($elObjtUsuarioRol != null and $elObjtUsuarioRol->insertar()) {
+        $elObjtUsuariorol = $this->cargarObjeto($param);
+        if ($elObjtUsuariorol != null and $elObjtUsuariorol->insertar()) {
             $resp = true;
         }
-
         return $resp;
+
     }
 
-    public function eliminar($param){
-
+    public function baja($param)
+    {
         $resp = false;
-
         if ($this->seteadosCamposClaves($param)) {
+            $elObjtUsuariorol = $this->cargarObjeto($param);
+            if ($elObjtUsuariorol != null and $elObjtUsuariorol->eliminar()) {
+                $resp = true;
+            }
+        }
 
-            $elObjtUsuarioRol = $this->cargarObjetoConClave($param);
+        return $resp;
+    }
 
-            if ($elObjtUsuarioRol != null and $elObjtUsuarioRol->eliminar()) {
-
+    public function modificacion($param)
+    {
+        $resp = false;
+        if ($this->seteadosCamposClaves($param)) {
+            $elObjtUsuariorol = $this->cargarObjeto($param);
+            if ($elObjtUsuariorol != null and $elObjtUsuariorol->modificar()) {
                 $resp = true;
             }
         }
         return $resp;
     }
 
-    public function modificacion($param){
-        $resp = false;
-        if ($this->seteadosCamposClaves($param)) {
-
-            $elObjtUsuarioRol = $this->cargarObjeto($param);
-
-            if ($elObjtUsuarioRol != null and $elObjtUsuarioRol->modificar()) {
-                $resp = true;
-            }
-        }
-        return $resp;
-    }
 
     public function buscar($param)
     {
-
-
         $where = " true ";
         if ($param <> NULL) {
             if (isset($param['idusuario']))
-                $where .= " and idusuario='" . $param['idusuario'] . "'";
+                $where .= " and idusuario =" . $param['idusuario'];
             if (isset($param['idrol']))
-                $where .= " and idrol ='" . $param['idrol'] . "'";         
+                $where .= " and idrol ='" . $param['idrol'] . "'";
         }
-
         $arreglo = UsuarioRol::listar($where);
-
         return $arreglo;
     }
+
 }
+
+?>

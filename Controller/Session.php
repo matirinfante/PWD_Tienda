@@ -30,11 +30,13 @@ class Session
     public function validar($usNombre, $psw)
     {
         $valido = false;
-        $abmUs = new UsuarioController();
-        $list = $abmUs->buscar(["usNombre" => $usNombre, "usPass" => $psw]);
+        $controllerUsuario = new UsuarioController();
+        $list = $controllerUsuario->buscar(["usnombre" => $usNombre, "uspass" => $psw]);
         if (count($list) > 0) {
             if ($list[0]->getUsDeshabilitado() == NULL || $list[0]->getUsDeshabilitado() == "0000-00-00 00:00:00") {
                 $_SESSION["idUsuario"] = $list[0]->getIdUsuario();
+                $_SESSION["rolesUsuario"] = $this->getRol();
+                $_SESSION["rolActivo"] = $_SESSION["rolesUsuario"][0];
                 $valido = true;
             }
         }
@@ -59,8 +61,8 @@ class Session
     public function getUsuario()
     {
         $usuario = null;
-        $abmUs = new UsuarioController();
-        $list = $abmUs->buscar(["idUsuario" => $_SESSION["idUsuario"]]);
+        $controllerUsuario = new UsuarioController();
+        $list = $controllerUsuario->buscar(["idUsuario" => $_SESSION["idUsuario"]]);
         if (count($list) > 0) {
             $usuario = $list[0];
         }
@@ -73,20 +75,28 @@ class Session
     public function getRol()
     {
         $roles = array();
-        $abmUR = new UsuarioRolController();
-        $abmR = new RolController();
-        $uss = $this->getUsuario();
-        // print_r($uss);
-        $list = $abmUR->buscar(["idUsuario" => $uss->getIdUsuario()]);
+        $controllerUsuarioRol = new UsuarioRolController();
+        $controllerRol = new RolController();
+        $objUsuario = $this->getUsuario();
+        $list = $controllerUsuarioRol->buscar(["idusuario" => $objUsuario->getIdUsuario()]);
         if (count($list) > 0) {
-            foreach ($list as $UR) {
-                $objRol = $abmR->buscar(["idRol" => $UR->getObjRol()->getIdRol()]);
+            foreach ($list as $objUsuarioRol) {
+                $objRol = $controllerRol->buscar(["idrol" => $objUsuarioRol->getObjRol()->getIdRol()]);
                 array_push($roles, $objRol[0]);
             }
         }
         return $roles;
     }
 
+    public function getRolActivo()
+    {
+        return $_SESSION["rolActivo"];
+    }
+
+    public function setRolActivo($nuevoRol)
+    {
+        $_SESSION["rolActivo"] = $nuevoRol;
+    }
 
     /**
      * Cierra la sesión actual
