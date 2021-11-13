@@ -1,99 +1,98 @@
 <?php
 
-class CompraController
-{
-    public function cargarObjeto($param){
+class CompraController{
 
+    private function cargarObjeto($param)
+    {
         $obj = null;
+        if (array_key_exists('idcompra', $param) and array_key_exists('cofecha', $param)
+            and array_key_exists('idusuario', $param)) {
 
-        if (array_key_exists('cofecha', $param) && array_key_exists('idusuario', $param) ) {
+            
+            $objUsuario = new Usuario();
+            $objUsuario->getIdUsuario($param['idusuario']); 
+            $objUsuario->cargar();
 
+           
             $obj = new Compra();
-
-            $obj->setear($param['idcompra'], $param['cofecha'], $param['idusuario']);
-
+            $obj->setear($param['idcompra'], $param['cofecha'], $objUsuario);
         }
         return $obj;
     }
 
-    private function cargarObjetoConClave($param){
+    private function cargarObjetoConClave($param)
+    {
         $obj = null;
-
         if (isset($param['idcompra'])) {
             $obj = new Compra();
             $obj->setear($param['idcompra'], null, null);
-
         }
         return $obj;
     }
 
-    private function seteadosCamposClaves($param){
-
+    private function seteadosCamposClaves($param)
+    {
         $resp = false;
-        if (isset($param['idcompra']))
-
-            $resp = true;
-        return $resp;
-    }
-
-    public function insertar($param){
-
-        $resp = false;
-        $elObjtCompra = new Compra();
-        $elObjtCompra = $this->cargarObjeto($param);
-
-        if ($elObjtCompra != null and $elObjtCompra->insertar()) {
+        if (isset($param['idcompra'])) {
             $resp = true;
         }
 
         return $resp;
     }
 
-    public function eliminar($param){
-
+    public function alta($param)
+    {
         $resp = false;
-
-        if ($this->seteadosCamposClaves($param)) {
-
+        $param['idcompra'] = null;
+        $elObjtArchivoE = $this->cargarObjeto($param);
+        if ($elObjtArchivoE != null and $elObjtArchivoE->insertar()) {
+            $resp = true;
+        }
+        return $resp;
+    }
+    public function baja($param)
+    {
+        $resp = false;
+        if ($this->seteadosCamposClaves($param)){
             $elObjtCompra = $this->cargarObjetoConClave($param);
-
-            if ($elObjtCompra != null and $elObjtCompra->eliminar()) {
-
-                $resp = true;
+            if ($elObjtCompra!=null){
+                if ($elObjtCompra->eliminar()){
+                    $resp = true;
+                }
             }
         }
         return $resp;
     }
 
-    public function modificacion($param){
+    public function modificacion($param)
+    {
         $resp = false;
         if ($this->seteadosCamposClaves($param)) {
-
-            $elObjtCompra = $this->cargarObjeto($param);
-
-            if ($elObjtCompra != null and $elObjtCompra->modificar()) {
+            $elObjtArchivoE = $this->cargarObjeto($param);
+            if ($elObjtArchivoE != null and $elObjtArchivoE->modificar()) {
                 $resp = true;
             }
         }
         return $resp;
     }
-
     public function buscar($param)
     {
-
-
         $where = " true ";
-        if ($param <> NULL) {
-            if (isset($param['idcompra']))
-                $where .= " and idcompra='" . $param['idcompra'] . "'";
-            if (isset($param['cofecha']))
+        if ($param != null) {
+            if (isset($param['idcompra'])) {
+                $where .= " and idcompra =" . $param['idcompra'];
+            }
+
+            if (isset($param['cofecha'])) {
                 $where .= " and cofecha ='" . $param['cofecha'] . "'";
-            if (isset($param['idusuario']))
-                $where .= " and idusuario ='" . $param['idusuario'] . "'";            
+            }
+
+            if (isset($param['idusuario'])) {
+                $where .= " and idusuario ='" . $param['idusuario'] . "'";
+            }
+
         }
-
         $arreglo = Compra::listar($where);
-
         return $arreglo;
     }
 
