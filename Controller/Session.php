@@ -33,8 +33,8 @@ class Session
         $controllerUsuario = new UsuarioController();
         $list = $controllerUsuario->buscar(["usnombre" => $usNombre, "uspass" => $psw]);
         if (count($list) > 0) {
-            if ($list[0]->getUsDeshabilitado() == NULL || $list[0]->getUsDeshabilitado() == "0000-00-00 00:00:00") {
-                $_SESSION["idUsuario"] = $list[0]->getIdUsuario();
+            if ($list[0]->getUsdeshabilitado() == NULL || $list[0]->getUsdeshabilitado() == "0000-00-00 00:00:00") {
+                $_SESSION["idUsuario"] = $list[0]->getIdusuario();
                 $_SESSION["rolesUsuario"] = $this->getRol();
                 $_SESSION["rolActivo"] = $_SESSION["rolesUsuario"][0];
                 $valido = true;
@@ -78,10 +78,10 @@ class Session
         $controllerUsuarioRol = new UsuarioRolController();
         $controllerRol = new RolController();
         $objUsuario = $this->getUsuario();
-        $list = $controllerUsuarioRol->buscar(["idusuario" => $objUsuario->getIdUsuario()]);
+        $list = $controllerUsuarioRol->buscar(["idusuario" => $objUsuario->getIdusuario()]);
         if (count($list) > 0) {
             foreach ($list as $objUsuarioRol) {
-                $objRol = $controllerRol->buscar(["idrol" => $objUsuarioRol->getObjRol()->getIdRol()]);
+                $objRol = $controllerRol->buscar(["idrol" => $objUsuarioRol->getObjRol()->getIdrol()]);
                 array_push($roles, $objRol[0]);
             }
         }
