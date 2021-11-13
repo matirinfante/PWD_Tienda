@@ -115,8 +115,6 @@ class Usuario
                     array_push($arreglo, $obj);
                 }
             }
-        } else {
-            $this->setmensajeoperacion("Usuario->listar: " . $base->getError());
         }
         return $arreglo;
     }

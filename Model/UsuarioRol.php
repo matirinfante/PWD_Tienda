@@ -1,4 +1,5 @@
 <?php
+
 class UsuarioRol
 {
     private $objUsuario;
@@ -101,18 +102,16 @@ class UsuarioRol
             if ($res > 0) {
                 while ($row = $base->Registro()) {
                     $objRel = new Usuariorol();
-                    $objUs=new Usuario();
+                    $objUs = new Usuario();
                     $objUs->setIdusuario($row['idusuario']);
                     $objUs->cargar();
-                    $objRol=new Rol();
+                    $objRol = new Rol();
                     $objRol->setIdrol($row['idrol']);
                     $objRol->cargar();
-                    $objRel->setear($objUs,$objRol);
+                    $objRel->setear($objUs, $objRol);
                     array_push($arreglo, $objRel);
                 }
             }
-        } else {
-            $this->setmensajeoperacion("usuariorol->listar: " . $base->getError());
         }
         return $arreglo;
     }
