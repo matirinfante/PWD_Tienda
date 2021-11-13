@@ -1,97 +1,90 @@
 <?php
 
-class MenuRolController
-{
-    public function cargarObjeto($param){
-
+class MenuRolController{
+ 
+    private function cargarObjeto($param){
         $obj = null;
-
-        if (array_key_exists('idrol', $param) ) {
-
+           
+        if( array_key_exists('idmenu',$param) and array_key_exists('idrol',$param)){
+            $abmMenu=new abmMenu();
+            $objMenu=$abmMenu->buscar(['idmenu'=>$param['idmenu']]);
+            $abmRol=new abmRol();
+            $objRol=$abmRol->buscar(['idrol'=>$param['idrol']]);
             $obj = new MenuRol();
-
-            $obj->setear($param['idmenu'], $param['idrol']);
-
+            $obj->setear($objMenu[0],$objRol[0]);
         }
         return $obj;
     }
+    
 
     private function cargarObjetoConClave($param){
         $obj = null;
-
-        if (isset($param['idmenu'])) {
+        
+        if( isset($param['idmenu']) && isset($param['idrol']) ){
+            $abmMenu=new abmMenu();
+            $objMenu=$abmMenu->buscar(['idmenu'=>$param['idmenu']]);
+            $abmRol=new abmRol();
+            $objRol=$abmRol->buscar(['idrol'=>$param['idrol']]);
             $obj = new MenuRol();
-            $obj->setear($param['idmenu'], null);
-
+            $obj->setear($objMenu[0],$objRol[0]);
         }
         return $obj;
     }
-
+    
+    
+    
     private function seteadosCamposClaves($param){
-
         $resp = false;
-        if (isset($param['idmenu']))
-
+        if (isset($param['idmenu']) && isset($param['idrol']))
             $resp = true;
         return $resp;
     }
-
-    public function insertar($param){
-
+    
+    public function alta($param){
         $resp = false;
-        $elObjtMenuRol = new MenuRol();
-        $elObjtMenuRol = $this->cargarObjeto($param);
-
-        if ($elObjtMenuRol != null and $elObjtMenuRol->insertar()) {
+        //$param['idmenu'] =null;
+        $elObjtMenurol = $this->cargarObjeto($param);
+        if ($elObjtMenurol!=null and $elObjtMenurol->insertar()){
             $resp = true;
         }
-
         return $resp;
+        
     }
-
-    public function eliminar($param){
-
+    public function baja($param){
         $resp = false;
-
-        if ($this->seteadosCamposClaves($param)) {
-
-            $elObjtMenuRol = $this->cargarObjetoConClave($param);
-
-            if ($elObjtMenuRol != null and $elObjtMenuRol->eliminar()) {
-
+        if ($this->seteadosCamposClaves($param)){
+            $elObjtMenurol = $this->cargarObjetoConClave($param);
+            if ($elObjtMenurol!=null and $elObjtMenurol->eliminar()){
                 $resp = true;
             }
         }
+        
         return $resp;
     }
 
     public function modificacion($param){
         $resp = false;
-        if ($this->seteadosCamposClaves($param)) {
-
-            $elObjtMenuRol = $this->cargarObjeto($param);
-
-            if ($elObjtMenuRol != null and $elObjtMenuRol->modificar()) {
+        if ($this->seteadosCamposClaves($param)){
+            $elObjtMenurol = $this->cargarObjeto($param);
+            if($elObjtMenurol!=null and $elObjtMenurol->modificar()){
                 $resp = true;
             }
         }
         return $resp;
     }
 
-    public function buscar($param)
-    {
 
-
+    public function buscar($param){
         $where = " true ";
-        if ($param <> NULL) {
-            if (isset($param['idmenu']))
-                $where .= " and idmenu='" . $param['idmenu'] . "'";
-            if (isset($param['idrol']))
-                $where .= " and idrol ='" . $param['idrol'] . "'";         
+        if ($param<>NULL){
+            if  (isset($param['idmenu']))
+                $where.=" and idmenu =".$param['idmenu'];
+            if  (isset($param['idrol']))
+                 $where.=" and idrol ='".$param['idrol']."'";
         }
-
-        $arreglo = MenuRol::listar($where);
-
+        $arreglo = MenuRol::listar($where);  
         return $arreglo;
     }
+
 }
+?>

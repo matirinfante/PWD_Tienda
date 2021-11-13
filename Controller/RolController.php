@@ -2,75 +2,72 @@
 
 class RolController
 {
-    public function cargarObjeto($param){
 
+    private function cargarObjeto($param)
+    {
         $obj = null;
 
-        if (array_key_exists('rodescripcion', $param) ) {
-
+        if (array_key_exists('idrol', $param) and array_key_exists('rodescripcion', $param)) {
             $obj = new Rol();
-
             $obj->setear($param['idrol'], $param['rodescripcion']);
-
         }
         return $obj;
     }
 
-    private function cargarObjetoConClave($param){
-        $obj = null;
 
+    private function cargarObjetoConClave($param)
+    {
+        $obj = null;
         if (isset($param['idrol'])) {
             $obj = new Rol();
             $obj->setear($param['idrol'], null);
-
         }
         return $obj;
     }
 
-    private function seteadosCamposClaves($param){
 
+    private function seteadosCamposClaves($param)
+    {
         $resp = false;
-        if (isset($param['idrol']))
-
-            $resp = true;
-        return $resp;
-    }
-
-    public function insertar($param){
-
-        $resp = false;
-        $elObjtRol = new Rol();
-        $elObjtRol = $this->cargarObjeto($param);
-
-        if ($elObjtRol != null and $elObjtRol->insertar()) {
+        if (isset($param['idrol'])) {
             $resp = true;
         }
 
         return $resp;
     }
 
-    public function eliminar($param){
 
+    public function alta($param)
+    {
         $resp = false;
+        $param['idrol']=null;
+        $elObjtRol = $this->cargarObjeto($param);
+        if ($elObjtRol != null and $elObjtRol->insertar()) {
+            $resp = true;
+        }
+        return $resp;
+    }
 
-        if ($this->seteadosCamposClaves($param)) {
-
+  
+    public function baja($param)
+    {
+        $resp = false;
+        if ($this->seteadosCamposClaves($param)){
             $elObjtRol = $this->cargarObjetoConClave($param);
-
-            if ($elObjtRol != null and $elObjtRol->eliminar()) {
-
-                $resp = true;
+            if ($elObjtRol!=null){
+                if ($elObjtRol->eliminar()){
+                    $resp = true;
+                }
             }
         }
         return $resp;
     }
 
-    public function modificacion($param){
+    public function modificacion($param)
+    {
         $resp = false;
         if ($this->seteadosCamposClaves($param)) {
-
             $elObjtRol = $this->cargarObjeto($param);
-
             if ($elObjtRol != null and $elObjtRol->modificar()) {
                 $resp = true;
             }
@@ -78,20 +75,21 @@ class RolController
         return $resp;
     }
 
+  
     public function buscar($param)
     {
-
-
         $where = " true ";
-        if ($param <> NULL) {
-            if (isset($param['idrol']))
-                $where .= " and idrol='" . $param['idrol'] . "'";
-            if (isset($param['rodescripcion']))
-                $where .= " and rodescripcion ='" . $param['rodescripcion'] . "'";         
+        if ($param != null) {
+            if (isset($param['idrol'])) {
+                $where .= " and idrol =" . $param['idrol'];
+            }
+
+            if (isset($param['rodescripcion'])) {
+                $where .= " and rodescripcion ='" . $param['rodescripcion'] . "'";
+            }
+
         }
-
         $arreglo = Rol::listar($where);
-
         return $arreglo;
     }
 }
