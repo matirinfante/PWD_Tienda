@@ -2,11 +2,18 @@
 include_once("../../config.php");
 $session = new Session();
 $controller = new RolController();
+
 if (!$session->activa()) {
     header('location: login.php');
     exit();
 }
+
+var_dump($session->getRolActivo());
+
+
 include_once("../structure/header.php");
+
+
 
 ?>
 <div class="container-fluid p-5">
