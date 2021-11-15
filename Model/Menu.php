@@ -1,4 +1,5 @@
 <?php
+
 class Menu
 {
     private $idmenu;
@@ -37,12 +38,12 @@ class Menu
             if ($res > -1) {
                 if ($res > 0) {
                     $row = $base->Registro();
-                    if ($row['idpadre']!=null){
-                        $objPadre=new Menu();
+                    if ($row['idpadre'] != null) {
+                        $objPadre = new Menu();
                         $objPadre->setIdmenu($row['idpadre']);
-                        $objPadre->cargar();                        
-                    }else{
-                        $objPadre=null;
+                        $objPadre->cargar();
+                    } else {
+                        $objPadre = null;
                     }
                     $this->setear($row['idmenu'], $row['menombre'], $row['medescripcion'], $objPadre, $row['medeshabilitado']);
 
@@ -60,19 +61,18 @@ class Menu
         $resp = false;
         $base = new BaseDatos();
         $sql = "INSERT INTO menu(menombre,medescripcion,idpadre,medeshabilitado) ";
-        $sql.="VALUES('" . $this->getMenombre() . "','" . $this->getMedescripcion() . "',"; 
-        if($this->getObjMenu()!=null){
-            $sql.=$this->getObjMenu()->getIdmenu().",";
-        }else{
-            $sql.="null,";
+        $sql .= "VALUES('" . $this->getMenombre() . "','" . $this->getMedescripcion() . "',";
+        if ($this->getObjMenu() != null) {
+            $sql .= $this->getObjMenu()->getIdmenu() . ",";
+        } else {
+            $sql .= "null,";
         }
-        if ($this->getMedeshabilitado()!=null){
-            $sql.="'".$this->getMedeshabilitado()."'";
+        if ($this->getMedeshabilitado() != null) {
+            $sql .= "'" . $this->getMedeshabilitado() . "'";
+        } else {
+            $sql .= "null";
         }
-        else{
-            $sql.="null";
-        }
-        $sql.=");";
+        $sql .= ");";
         if ($base->Iniciar()) {
             if ($elid = $base->Ejecutar($sql)) {
                 $this->setIdmenu($elid);
@@ -90,18 +90,18 @@ class Menu
     {
         $resp = false;
         $base = new BaseDatos();
-        $sql = "UPDATE menu SET menombre='" . $this->getMenombre() . "', medescripcion= '" . $this->getMedescripcion()."', ";
-        if($this->getObjMenu()!=null){
-            $sql.="idpadre= ".$this->getObjMenu()->getIdmenu().", ";
-        }else{
-            $sql.="idpadre= null, ";
+        $sql = "UPDATE menu SET menombre='" . $this->getMenombre() . "', medescripcion= '" . $this->getMedescripcion() . "', ";
+        if ($this->getObjMenu() != null) {
+            $sql .= "idpadre= " . $this->getObjMenu()->getIdmenu() . ", ";
+        } else {
+            $sql .= "idpadre= null, ";
         }
-        if ($this->getMedeshabilitado()!=null){
-            $sql.="medeshabilitado= '".$this->getMedeshabilitado()."' ";
-        }else{
-            $sql.="medeshabilitado= null ";
+        if ($this->getMedeshabilitado() != null) {
+            $sql .= "medeshabilitado= '" . $this->getMedeshabilitado() . "' ";
+        } else {
+            $sql .= "medeshabilitado= null ";
         }
-        $sql.="WHERE idmenu=" . $this->getIdmenu();
+        $sql .= "WHERE idmenu=" . $this->getIdmenu();
         if ($base->Iniciar()) {
             if ($base->Ejecutar($sql)) {
                 $resp = true;
@@ -144,13 +144,13 @@ class Menu
             if ($res > 0) {
 
                 while ($row = $base->Registro()) {
-                    if ($row['idpadre']!=null){
-                        $objPadre=new Menu();
+                    if ($row['idpadre'] != null) {
+                        $objPadre = new Menu();
                         $objPadre->setIdmenu($row['idpadre']);
                         $objPadre->cargar();
-                        
-                    }else{
-                        $objPadre=null;
+
+                    } else {
+                        $objPadre = null;
                     }
                     $obj = new Menu();
                     $obj->setear($row['idmenu'], $row['menombre'], $row['medescripcion'], $objPadre, $row['medeshabilitado']);
@@ -220,6 +220,7 @@ class Menu
     {
         return $this->objMenu;
     }
+
     public function setObjMenu($objMenu)
     {
         $this->objMenu = $objMenu;
