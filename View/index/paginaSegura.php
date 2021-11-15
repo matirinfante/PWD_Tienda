@@ -9,9 +9,15 @@ if (!$session->activa()) {
 include_once("../structure/header.php");
 
 ?>
-
-<div class="container p-5">
-    LOGGED
+<div class="container-fluid p-5">
+    <div class="row">
+        <?php
+        include_once("../structure/menuLateral.php");
+        ?>
+        <div class="container">
+            <h2 class="text-center">LOGGED</h2>
+        </div>
+    </div>
 </div>
 <?php
 include_once("../structure/footer.php");

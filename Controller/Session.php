@@ -36,7 +36,7 @@ class Session
             if ($list[0]->getUsdeshabilitado() == NULL || $list[0]->getUsdeshabilitado() == "0000-00-00 00:00:00") {
                 $_SESSION["idUsuario"] = $list[0]->getIdusuario();
                 $_SESSION["rolesUsuario"] = $this->getRol();
-                $_SESSION["rolActivo"] = $_SESSION["rolesUsuario"][0];
+                $_SESSION["rolActivo"] = $_SESSION["rolesUsuario"][0]->getIdrol();
                 $valido = true;
             }
         }
