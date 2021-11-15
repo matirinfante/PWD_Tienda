@@ -40,7 +40,30 @@
                     $username = $user->getusnombre();
                     echo "<li class='nav-item mx-0 mx-lg-1'><a class='nav-link py-3 px-0 px-lg-3 rounded'
                                                      href='../index/paginaSegura.php'>${username}</a></li>";
-                    ?>
+                ?>
+
+                
+<div class="dropdown">
+  <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+
+  </a>
+
+  <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+    <?php
+    $roles = $session->getRol();
+    foreach ($roles as $rol) {
+        $desc_rol = $rol->getRoldescripcion();
+        echo "<li><a class='dropdown-item' href='../action/updateSession.php?idrol=".$rol->getIdrol()."'>". $desc_rol ."</a></li>";
+    }
+    ?>
+    
+
+  </ul>
+</div>
+
+
+
+                
                     <!-- ICONO CERRAR SESION -->
                     <div class="btn-group">
                         <button type="button" class="btn btn-secondary">
