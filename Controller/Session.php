@@ -93,9 +93,21 @@ class Session
         return $_SESSION["rolActivo"];
     }
 
-    public function setRolActivo($nuevoRol)
-    {
-        $_SESSION["rolActivo"] = $nuevoRol;
+    public function setRolActivo($idrol){
+        $ret = false;
+        $roles = $this->getRol();
+        $i = 0;
+        while($i<count($roles) && !$ret){
+            if($roles[$i]->getIdrol() == $idrol["idrol"]){
+                $controllerRol = new RolController();
+                var_dump(gettype($controllerRol));
+                $objRol = $controllerRol->buscar(["idrol" => $idrol["idrol"]]);
+                $_SESSION['rolActivo'] = $objRol[0];
+                $ret = true;
+            }
+            $i++;
+        }
+        return $ret;
     }
 
     /**
