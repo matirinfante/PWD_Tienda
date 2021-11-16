@@ -10,20 +10,15 @@ include_once "../structure/header.php";
 if ($session->getRolActivo()["idrol"] != "1") { ?>
     <div class="container">
         <div class="alert alert-danger" role="alert">
-            No puede modificar información de usuario-admin (No está con el rol Administrador).
+            ACCESO PROHIBIDO
         </div>
     </div>
     <?php
 } else {
     ?>
 
-    <h2>USUARIO - ROL</h2>
-    <p>En esta pagina el admin puede gestionar los usuarios y sus roles.</p>
-
-    <!-- ---TABLA USUARIOS--- -->
-
-    <table id="dg" title="Usuarios" class="easyui-datagrid" style="width:950px;height:250px"
-           url="accion/admin/listar_usuarios.php"
+    <table id="dg" title="Usuarios" class="easyui-datagrid p-3"
+           url="../accion/admin/listarUsuario.php"
            toolbar="#toolbar" pagination="true"
            rownumbers="true" fitColumns="true" singleSelect="true">
         <thead>
@@ -42,13 +37,13 @@ if ($session->getRolActivo()["idrol"] != "1") { ?>
         <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="editUser()">Editar
             Usuario</a>
         <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-remove" plain="true"
-           onclick="destroyUser()">Baja/Alta</a>
+           onclick="destroyUser()">Eliminar usuario</a>
     </div>
 
     <div id="dlg" class="easyui-dialog" style="width:400px"
          data-options="closed:true,modal:true,border:'thin',buttons:'#dlg-buttons'">
         <form id="fm" method="post" novalidate style="margin:0;padding:20px 50px">
-            <h3>Informacion Usuario</h3>
+            <h3>Datos Usuario</h3>
             <div style="margin-bottom:10px">
                 <input name="usnombre" class="easyui-textbox" required="true" label="Nombre:" style="width:100%">
             </div>
@@ -56,30 +51,28 @@ if ($session->getRolActivo()["idrol"] != "1") { ?>
                 <input name="uspass" class="easyui-textbox" required="true" label="Contraseña:" style="width:100%">
             </div>
             <div style="margin-bottom:10px">
-                <input name="usmail" class="easyui-textbox" required="true" label="Mail:" style="width:100%">
-            </div>
-            <div>
-                <input name="usdeshabilitado" value="usdeshabilitado" type="hidden">
+                <input name="usmail" class="easyui-textbox" required="true" label="E-mail:" style="width:100%">
             </div>
             <div>
                 <input name="idusuario" value="idusuario" type="hidden">
             </div>
+            <div>
+                <input name="usdeshabilitado" value="usdeshabilitado" type="hidden">
+            </div>
+
         </form>
     </div>
     <div id="dlg-buttons">
         <a href="javascript:void(0)" class="easyui-linkbutton c6" iconCls="icon-ok" onclick="saveUser()"
-           style="width:90px">Aceptar</a>
+           style="width:90px">OK</a>
         <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel"
            onclick="javascript:$('#dlg').dialog('close')" style="width:90px">Cancelar</a>
     </div>
 
-
-    <!-- ---TABLA ROLES USUARIO--- -->
-    </br>
     </br>
 
-    <table id="dgRol" title="UsuarioRol" class="easyui-datagrid" style="width:700px;height:250px"
-           url="accion/admin/listar_usuariosRol.php"
+    <table id="dgRol" title="UsuarioRol" class="easyui-datagrid p-3" style="width:700px;height:250px"
+           url="../accion/admin/listarUsuarioRol.php"
            toolbar="#toolbar2" pagination="true"
            rownumbers="true" fitColumns="true" singleSelect="true">
         <thead>
@@ -118,13 +111,10 @@ if ($session->getRolActivo()["idrol"] != "1") { ?>
            onclick="javascript:$('#dlgRol').dialog('close')" style="width:90px">Cancelar</a>
     </div>
 
-
-    <!-- ---TABLA ROLES--- -->
-    </br>
     </br>
 
-    <table id="dgRoll" title="Rol" class="easyui-datagrid" style="width:700px;height:250px"
-           url="accion/admin/listar_roles.php"
+    <table id="dgRoll" title="Rol" class="easyui-datagrid p-3" style="width:700px;height:250px"
+           url="../accion/admin/listarRol.php"
            toolbar="#toolbar3" pagination="true"
            rownumbers="true" fitColumns="true" singleSelect="true">
         <thead>
@@ -147,7 +137,7 @@ if ($session->getRolActivo()["idrol"] != "1") { ?>
     <div id="dlgRoll" class="easyui-dialog" style="width:400px"
          data-options="closed:true,modal:true,border:'thin',buttons:'#dlgRoll-buttons'">
         <form id="fmRoll" method="post" novalidate style="margin:0;padding:20px 50px">
-            <h3>Informacion Rol</h3>
+            <h3>Datos Rol</h3>
             <div style="margin-bottom:10px">
                 <input name="rodescripcion" class="easyui-textbox" required="true" label="Descripcion:"
                        style="width:100%">
@@ -159,7 +149,7 @@ if ($session->getRolActivo()["idrol"] != "1") { ?>
     </div>
     <div id="dlgRoll-buttons">
         <a href="javascript:void(0)" class="easyui-linkbutton c6" iconCls="icon-ok" onclick="saveRol()"
-           style="width:90px">Aceptar</a>
+           style="width:90px">OK</a>
         <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel"
            onclick="javascript:$('#dlgRoll').dialog('close')" style="width:90px">Cancelar</a>
     </div>
@@ -171,7 +161,7 @@ if ($session->getRolActivo()["idrol"] != "1") { ?>
         function newUser() {
             $('#dlg').dialog('open').dialog('center').dialog('setTitle', 'Nuevo Usuario');
             $('#fm').form('clear');
-            url = 'accion/admin/alta_usuario.php';
+            url = '../accion/admin/createUsuario.php';
         }
 
         function editUser() {
@@ -179,7 +169,7 @@ if ($session->getRolActivo()["idrol"] != "1") { ?>
             if (row) {
                 $('#dlg').dialog('open').dialog('center').dialog('setTitle', 'Editar Usuario');
                 $('#fm').form('load', row);
-                url = 'accion/admin/mod_usuario.php';
+                url = '../accion/admin/updateUsuario.php';
             }
         }
 
@@ -208,10 +198,10 @@ if ($session->getRolActivo()["idrol"] != "1") { ?>
         function destroyUser() {
             var row = $('#dg').datagrid('getSelected');
             if (row) {
-                $.messager.confirm('Confirmar', 'Cambiar el estado del Usuario?', function (r) {
+                $.messager.confirm('Confirmar', '¿Desea cambiar el estado del Usuario?', function (r) {
                     if (r) {
                         $('#fm').form('load', row);
-                        url = 'accion/admin/baja_usuario.php';
+                        url = 'accion/admin/deleteUsuario.php';
                         $('#fm').form('submit', {
                             url: url,
                             iframe: false,
@@ -235,14 +225,12 @@ if ($session->getRolActivo()["idrol"] != "1") { ?>
             }
         }
 
-        //
-        // ---TABLA USUARIO-ROL---
-        //
+        // UsuarioRol
 
         function newUsRol() {
             $('#dlgRol').dialog('open').dialog('center').dialog('setTitle', 'Nuevo Usuario');
             $('#fmRol').form('clear');
-            url = 'accion/admin/alta_usuarioRol.php';
+            url = '../accion/admin/createUsuarioRol.php';
         }
 
         function saveUsRol() {
@@ -270,9 +258,9 @@ if ($session->getRolActivo()["idrol"] != "1") { ?>
         function destroyUsRol() {
             var row = $('#dgRol').datagrid('getSelected');
             if (row) {
-                $.messager.confirm('Confirm', 'Are you sure you want to destroy this user?', function (r) {
+                $.messager.confirm('Confirmar', '¿Está seguro que quiere eliminar la selección?', function (r) {
                     if (r) {
-                        $.post('accion/admin/baja_usuarioRol.php', {
+                        $.post('../accion/admin/deleteUsuarioRol.php', {
                             idusuario: row.idusuario,
                             idrol: row.idrol
                         }, function (result) {
@@ -290,14 +278,12 @@ if ($session->getRolActivo()["idrol"] != "1") { ?>
             }
         }
 
-        //
-        // ---TABLA ROLES---
-        //
+        // Rol
 
         function newRol() {
             $('#dlgRoll').dialog('open').dialog('center').dialog('setTitle', 'Nuevo Rol');
             $('#fmRoll').form('clear');
-            url = 'accion/admin/alta_rol.php';
+            url = '../accion/admin/createRol.php';
         }
 
         function editRol() {
@@ -305,7 +291,7 @@ if ($session->getRolActivo()["idrol"] != "1") { ?>
             if (row) {
                 $('#dlgRoll').dialog('open').dialog('center').dialog('setTitle', 'Editar Rol');
                 $('#fmRoll').form('load', row);
-                url = 'accion/admin/mod_rol.php?id=' + row.id;
+                url = '../accion/admin/updateRol.php?id=' + row.id;
             }
         }
 
@@ -334,9 +320,9 @@ if ($session->getRolActivo()["idrol"] != "1") { ?>
         function destroyRol() {
             var row = $('#dgRoll').datagrid('getSelected');
             if (row) {
-                $.messager.confirm('Confirmar', 'Esta seguro de borrar el Rol?', function (r) {
+                $.messager.confirm('Confirmar', '¿Desea eliminar la selección?', function (r) {
                     if (r) {
-                        $.post('accion/admin/baja_rol.php', {idrol: row.idrol}, function (result) {
+                        $.post('../accion/admin/deleteRol.php', {idrol: row.idrol}, function (result) {
                             console.log(result);
                             if (result.respuesta) {
                                 $('#dgRoll').datagrid('reload');    // reload the user data
