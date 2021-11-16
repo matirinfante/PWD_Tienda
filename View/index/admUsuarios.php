@@ -7,7 +7,7 @@ if (!$session->activa()) {
     exit();
 }
 include_once "../structure/header.php";
-if ($session->getRolActivo()->getIdrol() != 1) { ?>
+if ($session->getRolActivo()["idrol"] != "1") { ?>
     <div class="container">
         <div class="alert alert-danger" role="alert">
             No puede modificar información de usuario-admin (No está con el rol Administrador).

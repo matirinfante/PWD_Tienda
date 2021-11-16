@@ -2,9 +2,8 @@
 $menuRolController = new MenuRolController();
 $menuController = new MenuController();
 $rolActivo = $session->getRolActivo();
-$data = array("idrol" => $rolActivo->getIdrol());
-$menu = $menuRolController->buscar($data);
-
+$data = array($rolActivo);
+$menu = $menuRolController->buscar($data[0]);
 if (!empty($menu)) {
     $listaMenu = $menuController->buscar(["idpadre" => $menu[0]->getObjmenu()]);
 }

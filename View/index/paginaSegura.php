@@ -8,12 +8,7 @@ if (!$session->activa()) {
     exit();
 }
 
-var_dump($session->getRolActivo());
-
-
 include_once("../structure/header.php");
-
-
 
 ?>
 <div class="container-fluid p-5">
