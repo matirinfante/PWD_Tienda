@@ -3,7 +3,7 @@
 class UsuarioController
 {
     public function cargarObjeto($param){
-
+var_dump($param);
         $obj = null;
 
         if (array_key_exists('usnombre', $param) && array_key_exists('uspass', $param) && array_key_exists('usmail', $param) && array_key_exists('usdeshabilitado', $param)) {

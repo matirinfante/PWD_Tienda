@@ -1,25 +1,33 @@
 <?php 
 include_once("../../config.php");
 
-$controller = new ProductoController();
+$datos = data_submitted();
 
-$productos = $controller->buscar(null);
+$page = isset($_POST['page']) ? intval($_POST['page']) : 1; 
+$rows = isset($_POST['rows']) ? intval($_POST['rows']) : 10; 
+
+$controller = new ProductoController();
+$productos = $controller->buscar($datos);
 
 $response["total"] = count($productos); 
 
+$formatResp = array();
 
-$productos = array(); 
-while($row = $result->fetch_assoc()){ 
-    array_push($users, $row); 
-} 
-$response["rows"] = $users; 
+//Se necesita formatear la respuesta a un json
 
+foreach ($productos as $producto) {
+    $nuevoElem['idproducto'] = $producto->getIdproducto();
+    $nuevoElem['pronombre'] = $producto->getPronombre();
+    $nuevoElem['prodetalle'] = $producto->getProdetalle();
+    $nuevoElem['procantstock'] = $producto->getProCantstock();
+    $nuevoElem['proprecio'] = $producto->getProprecio();
+    $nuevoElem['proeditorial'] = $producto->getProeditorial();
+    $nuevoElem['proautor'] = $producto->getProautor();
+    $nuevoElem['proimagen'] = $producto->getProimagen();
 
+    array_push($formatResp, $nuevoElem);
+}
 
-var_dump($productos);
-
-var_dump("<br>");
-
-/*** 
-echo json_encode($productos);
-*/
+$response["rows"] = $formatResp;
+ 
+echo json_encode($response);

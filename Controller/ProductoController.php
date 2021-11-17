@@ -7,9 +7,9 @@ class ProductoController
     {
         $obj = null;
         if (array_key_exists('idproducto', $param) and array_key_exists('pronombre', $param) and array_key_exists('prodetalle', $param)
-            and array_key_exists('procantstock', $param)) {
+            and array_key_exists('procantstock', $param) and array_key_exists('proprecio', $param) and array_key_exists('proeditorial', $param) and array_key_exists('proautor', $param) and array_key_exists('proimagen', $param)) {
             $obj = new Producto();
-            $obj->setear($param['idproducto'], $param['pronombre'], $param['prodetalle'], $param['procantstock']);
+            $obj->setear($param['idproducto'], $param['pronombre'], $param['prodetalle'], $param['procantstock'], $param['proprecio'], $param['proeditorial'], $param['proautor'], $param['proimagen']);
         }
         return $obj;
     }
@@ -20,7 +20,7 @@ class ProductoController
         $obj = null;
         if (isset($param['idproducto'])) {
             $obj = new Producto();
-            $obj->setear($param['idproducto'], null, null, null);
+            $obj->setear($param['idproducto'], null, null, null, null, null, null, null);
         }
         return $obj;
     }
@@ -91,6 +91,21 @@ class ProductoController
 
             if (isset($param['procantstock'])) {
                 $where .= " and procantstock ='" . $param['procantstock'] . "'";
+            }
+            if (isset($param['proprecio'])) {
+                $where .= " and procanpropreciotstock ='" . $param['proprecio'] . "'";
+            }
+
+            if (isset($param['proeditorial'])) {
+                $where .= " and proeditorial ='" . $param['proeditorial'] . "'";
+            }
+
+            if (isset($param['proautor'])) {
+                $where .= " and proautor ='" . $param['proautor'] . "'";
+            }
+
+            if (isset($param['proimagen'])) {
+                $where .= " and proimagen ='" . $param['proimagen'] . "'";
             }
 
         }
