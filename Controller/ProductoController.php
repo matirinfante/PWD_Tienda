@@ -112,4 +112,56 @@ class ProductoController
         $arreglo = Producto::listar($where);
         return $arreglo;
     }
+
+    public function cargarImagen($datos)
+    {
+        $nombreArchivoImagen=$datos['proimagen'].".jpg";
+        $dir = "../View/images/";
+
+        $arrayRespuesta = array();
+        $arrayRespuesta["respCarga"] = "";
+        $arrayRespuesta["enlace"] = "";
+        
+        $texto = "";
+        $error = "";
+        $todoOK = true;
+
+        if ($nombreArchivoImagen != "") {
+            if ($todoOK && $_FILES['imagen']["error"] <= 0) {
+                $todoOK = true;
+                $error = "";
+            } else {
+                $todoOK = false;
+                $error = "ERROR: no se pudo cargar la imagen. No se pudo acceder al archivo Temporal";
+            }
+
+            $tipoJpeg = strpos(strtoupper($_FILES['imagen']["type"]), "JPEG");
+
+            //tipo
+            if ($todoOK && !$tipoJpeg) {
+                $error = "ERROR: El archivo seleccionado no es una imagen jpeg.";
+                $todoOK = false;
+            }
+
+        }
+        // Copiar/Guardar
+        if ($nombreArchivoImagen != "") {
+            if ($todoOK && !copy($_FILES['imagen']['tmp_name'], $dir . $nombreArchivoImagen)) {
+                #$error = "ERROR: no se pudo cargar el archivo de imagen.";
+                $error = $dir . $nombreArchivoImagen;
+                $todoOK = false;
+            }
+        }
+
+        if (!$todoOK) {
+            $texto = $error;
+            $arrayRespuesta["errorMsg"] = $texto;
+        }else{
+            $arrayRespuesta["exitoMsg"]="La imagen fue cargada correctamente";
+            $arrayRespuesta["enlace"] = $dir . $nombreArchivoImagen;
+        }
+        $arrayRespuesta["respuesta"]=$todoOK;
+        return $arrayRespuesta;
+    }
+
 }

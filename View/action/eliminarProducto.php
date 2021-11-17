@@ -4,7 +4,17 @@ include_once("../../config.php");
 
 $datos = data_submitted();
 
-$controller = new ProductoController();
-$response['respuesta'] = $controller->baja($datos);
- 
-echo json_encode($response); 
+$resp=false;
+if (isset($datos['idproducto']) ){
+    $controller = new ProductoController();
+    $resp = $controller->baja($datos);
+    
+}
+
+if (!$resp){
+    $retorno['errorMsg']="No se pudo cambiar el estado.";
+}
+$retorno['respuesta']=$resp;
+echo json_encode($retorno);
+
+?>

@@ -1,10 +1,15 @@
-<?php 
+<?php
 include_once("../../config.php");
+$datos=data_submitted();
 
-
-$datos = data_submitted();
-
-$controller = new ProductoController();
-$response['respuesta'] = $controller->modificacion($datos);
- 
-echo json_encode($response); 
+if (isset($datos['idproducto']) && isset($datos['procantstock']) ){
+    $controller=new ProductoController(); 
+    
+    $resp=$controller->modificacion($datos);
+}else{
+    $resp=false;
+    $retorno['errorMsg']="No se pudo MODIFICAR el producto.";
+}
+$retorno['respuesta']=$resp;
+echo json_encode($retorno);
+?>
