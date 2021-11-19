@@ -5,5 +5,4 @@ $session = new Session();
 $session->setRolActivo($datos);
 header('location:../index/paginaSegura.php');
 exit();
-#var_dump($session);
 ?>

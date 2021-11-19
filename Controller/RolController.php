@@ -7,9 +7,9 @@ class RolController
     {
         $obj = null;
 
-        if (array_key_exists('idrol', $param) and array_key_exists('rodescripcion', $param)) {
+        if (array_key_exists('idrol', $param) and array_key_exists('roldescripcion', $param)) {
             $obj = new Rol();
-            $obj->setear($param['idrol'], $param['rodescripcion']);
+            $obj->setear($param['idrol'], $param['roldescripcion']);
         }
         return $obj;
     }

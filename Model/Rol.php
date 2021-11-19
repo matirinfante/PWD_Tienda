@@ -61,7 +61,7 @@ class Rol
     {
         $resp = false;
         $base = new BaseDatos();
-        $sql = "UPDATE rol SET roldescripcion='" . $this->getRoldescripcion() . "' WHERE idrol=" . $this->getIdrol();
+        $sql = "UPDATE rol SET roldescripcion='{$this->getRoldescripcion()}' WHERE idrol={$this->getIdrol()}";
         if ($base->Iniciar()) {
             if ($base->Ejecutar($sql)) {
                 $resp = true;

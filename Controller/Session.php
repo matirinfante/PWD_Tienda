@@ -35,8 +35,7 @@ class Session
         if (count($list) > 0) {
             if ($list[0]->getUsdeshabilitado() == NULL || $list[0]->getUsdeshabilitado() == "0000-00-00 00:00:00") {
                 $_SESSION["idUsuario"] = $list[0]->getIdusuario();
-                $_SESSION["rolesUsuario"] = $this->getRol();
-                $_SESSION["rolActivo"] = $_SESSION["rolesUsuario"][0]->getIdrol();
+                $_SESSION["rolActivo"] = $this->getRol()[0]->getIdrol(); //asigna como rol activo el primer rol del conjunto de roles
                 $valido = true;
             }
         }
@@ -93,16 +92,16 @@ class Session
         return $_SESSION["rolActivo"];
     }
 
-    public function setRolActivo($idrol){
+    public function setRolActivo($idrol)
+    {
         $ret = false;
         $roles = $this->getRol();
         $i = 0;
-        while($i<count($roles) && !$ret){
-            if($roles[$i]->getIdrol() == $idrol["idrol"]){
+        while ($i < count($roles) && !$ret) {
+            if ($roles[$i]->getIdrol() == $idrol["idrol"]) {
                 $controllerRol = new RolController();
-                var_dump(gettype($controllerRol));
                 $objRol = $controllerRol->buscar(["idrol" => $idrol["idrol"]]);
-                $_SESSION['rolActivo'] = $objRol[0];
+                $_SESSION['rolActivo'] = $objRol[0]->getIdrol();
                 $ret = true;
             }
             $i++;
@@ -122,4 +121,19 @@ class Session
         }
         return $close;
     }
+
+    public function getCarrito()
+    {
+        $resp = array();
+        if (isset($_SESSION['carrito'])) {
+            $resp = $_SESSION['carrito'];
+        }
+        return $resp;
+    }
+
+    public function setCarrito($nuevoCarrito)
+    {
+        $_SESSION['carrito'] = $nuevoCarrito;
+    }
+
 }

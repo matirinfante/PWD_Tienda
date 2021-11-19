@@ -159,8 +159,6 @@ class Menu
 
             }
 
-        } else {
-            $this->setmensajeoperacion("menu->listar: " . $base->getError());
         }
 
         return $arreglo;

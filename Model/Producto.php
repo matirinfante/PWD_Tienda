@@ -1,10 +1,15 @@
 <?php
+
 class Producto
 {
     private $idproducto;
     private $pronombre;
     private $prodetalle;
     private $procantstock;
+    private $proprecio;
+    private $proeditorial;
+    private $proautor;
+    private $proimagen;
     private $mensajeoperacion;
 
     public function __construct()
@@ -13,15 +18,22 @@ class Producto
         $this->pronombre = "";
         $this->prodetalle = "";
         $this->procantstock = "";
+        $this->proprecio = "";
+        $this->proeditorial = "";
+        $this->proautor = "";
         $this->mensajeoperacion = "";
     }
 
-    public function setear($idproducto, $pronombre, $prodetalle, $procantstock)
+    public function setear($idproducto, $pronombre, $prodetalle, $procantstock, $proprecio, $proeditorial, $proautor, $proimagen)
     {
         $this->idproducto = $idproducto;
         $this->pronombre = $pronombre;
         $this->prodetalle = $prodetalle;
         $this->procantstock = $procantstock;
+        $this->proprecio = $proprecio;
+        $this->proeditorial = $proeditorial;
+        $this->proautor = $proautor;
+        $this->proimagen = $proimagen;
     }
 
     public function cargar()
@@ -34,7 +46,7 @@ class Producto
             if ($res > -1) {
                 if ($res > 0) {
                     $row = $base->Registro();
-                    $this->setear($row['idproducto'], $row['pronombre'], $row['prodetalle'], $row['procantstock']);
+                    $this->setear($row['idproducto'], $row['pronombre'], $row['prodetalle'], $row['procantstock'], $row['proprecio'], $row['proeditorial'], $row['proautor'], $row['proimagen']);
                 }
             }
         } else {
@@ -47,7 +59,7 @@ class Producto
     {
         $resp = false;
         $base = new BaseDatos();
-        $sql = "INSERT INTO producto(pronombre,prodetalle,procantstock)  VALUES('" . $this->getPronombre() . "','" . $this->getProdetalle() . "','" . $this->getProCantstock() . "');";
+        $sql = "INSERT INTO producto(pronombre,prodetalle,procantstock, proprecio, proeditorial, proautor, proimagen)  VALUES('" . $this->getPronombre() . "','" . $this->getProdetalle() . "','" . $this->getProCantstock() . "','" . $this->getProprecio() . "','" . $this->getProeditorial() . "','" . $this->getProautor() . "','" . $this->getProimagen() . "');";
         if ($base->Iniciar()) {
             if ($elid = $base->Ejecutar($sql)) {
                 $this->setIdproducto($elid);
@@ -65,7 +77,7 @@ class Producto
     {
         $resp = false;
         $base = new BaseDatos();
-        $sql = "UPDATE producto SET pronombre='" . $this->getPronombre() . "', prodetalle= '" . $this->getProdetalle() . "', procantstock= '" . $this->getProCantstock() . "' WHERE idproducto=" . $this->getIdproducto();
+        $sql = "UPDATE producto SET pronombre='" . $this->getPronombre() . "', prodetalle= '" . $this->getProdetalle() . "', procantstock= '" . $this->getProCantstock() . "', proprecio= '" . $this->getProprecio() . "', proeditorial= '" . $this->getProeditorial() . "', proautor= '" . $this->getProautor() . "', proimagen= '" . $this->getProimagen() . "' WHERE idproducto=" . $this->getIdproducto();
         if ($base->Iniciar()) {
             if ($base->Ejecutar($sql)) {
                 $resp = true;
@@ -109,12 +121,10 @@ class Producto
 
                 while ($row = $base->Registro()) {
                     $obj = new Producto();
-                    $obj->setear($row['idproducto'], $row['pronombre'], $row['prodetalle'], $row['procantstock']);
+                    $obj->setear($row['idproducto'], $row['pronombre'], $row['prodetalle'], $row['procantstock'], $row['proprecio'], $row['proeditorial'], $row['proautor'], $row['proimagen']);
                     array_push($arreglo, $obj);
                 }
             }
-        } else {
-            $this->setmensajeoperacion("Producto->listar: " . $base->getError());
         }
         return $arreglo;
     }
@@ -167,5 +177,45 @@ class Producto
     public function setMensajeoperacion($mensajeoperacion)
     {
         $this->mensajeoperacion = $mensajeoperacion;
+    }
+
+    public function getProprecio()
+    {
+        return $this->proprecio;
+    }
+
+    public function setProprecio($proprecio)
+    {
+        $this->proprecio = $proprecio;
+    }
+
+    public function getProeditorial()
+    {
+        return $this->proeditorial;
+    }
+
+    public function setProeditorial($proeditorial)
+    {
+        $this->proeditorial = $proeditorial;
+    }
+
+    public function getProautor()
+    {
+        return $this->proautor;
+    }
+
+    public function setProautor($proautor)
+    {
+        $this->proautor = $proautor;
+    }
+
+    public function getProimagen()
+    {
+        return $this->proimagen;
+    }
+
+    public function setProimagen($proimagen)
+    {
+        $this->proimagen = $proimagen;
     }
 }

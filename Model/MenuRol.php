@@ -1,4 +1,5 @@
 <?php
+
 class MenuRol
 {
     private $objMenu;
@@ -76,7 +77,7 @@ class MenuRol
     {
         $resp = false;
         $base = new BaseDatos();
-        $sql = "DELETE FROM menurol WHERE idmenu=" . $this->getObjMenu()->getIdmenu()." and idrol=".$this->getObjRol()->getIdrol();
+        $sql = "DELETE FROM menurol WHERE idmenu=" . $this->getObjMenu()->getIdmenu() . " and idrol=" . $this->getObjRol()->getIdrol();
         if ($base->Iniciar()) {
             if ($base->Ejecutar($sql)) {
                 return true;
@@ -100,48 +101,54 @@ class MenuRol
         $res = $base->Ejecutar($sql);
         if ($res > -1) {
             if ($res > 0) {
-
                 while ($row = $base->Registro()) {
+                    $objMenu = new Menu();
+                    $objMenu->setIdmenu($row['idmenu']);
+                    $objMenu->cargar();
+                    $objRol = new Rol();
+                    $objRol->setIdrol($row['idrol']);
+                    $objRol->cargar();
                     $obj = new MenuRol();
-                    $obj->setear($row['idmenu'], $row['idrol']);
+                    $obj->setear($objMenu, $objRol);
                     array_push($arreglo, $obj);
                 }
-
             }
-
-        } else {
-            $this->setmensajeoperacion("menurol->listar: " . $base->getError());
+            return $arreglo;
         }
-
-        return $arreglo;
     }
 
-    public function getObjMenu()
+    public
+    function getObjMenu()
     {
         return $this->objMenu;
     }
 
-    public function setObjMenu($objMenu)
+    public
+    function setObjMenu($objMenu)
     {
         $this->objMenu = $objMenu;
     }
 
-    public function getObjRol()
+    public
+    function getObjRol()
     {
         return $this->objRol;
     }
 
-    public function setObjRol($objRol)
+    public
+    function setObjRol($objRol)
     {
         $this->objRol = $objRol;
     }
 
-    public function getMensajeoperacion()
+    public
+    function getMensajeoperacion()
     {
         return $this->mensajeoperacion;
     }
 
-    public function setMensajeoperacion($mensajeoperacion)
+    public
+    function setMensajeoperacion($mensajeoperacion)
     {
         $this->mensajeoperacion = $mensajeoperacion;
     }

@@ -7,9 +7,9 @@ class CompraItemController{
            
         if( array_key_exists('idcompraitem',$param) and array_key_exists('idproducto',$param) and array_key_exists('idcompra',$param) and array_key_exists('cicantidad',$param)){
             $obj = new CompraItem();
-            $abmProducto=new abmProducto();            
+            $abmProducto=new ProductoController();
             $objProducto=$abmProducto->buscar(['idproducto'=>$param['idproducto']]);
-            $abmCompra=new abmCompra(); 
+            $abmCompra=new CompraController();
             $objCompra=$abmCompra->buscar(['idcompra'=>$param['idcompra']]);
             $obj->setear($param['idcompraitem'], $objProducto[0],$objCompra[0],$param['cicantidad']);
         }

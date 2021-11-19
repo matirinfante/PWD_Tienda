@@ -8,9 +8,9 @@ class MenuRolController
         $obj = null;
 
         if (array_key_exists('idmenu', $param) and array_key_exists('idrol', $param)) {
-            $abmMenu = new abmMenu();
+            $abmMenu = new MenuController();
             $objMenu = $abmMenu->buscar(['idmenu' => $param['idmenu']]);
-            $abmRol = new abmRol();
+            $abmRol = new RolController();
             $objRol = $abmRol->buscar(['idrol' => $param['idrol']]);
             $obj = new MenuRol();
             $obj->setear($objMenu[0], $objRol[0]);
@@ -24,9 +24,9 @@ class MenuRolController
         $obj = null;
 
         if (isset($param['idmenu']) && isset($param['idrol'])) {
-            $abmMenu = new abmMenu();
+            $abmMenu = new MenuController();
             $objMenu = $abmMenu->buscar(['idmenu' => $param['idmenu']]);
-            $abmRol = new abmRol();
+            $abmRol = new RolController();
             $objRol = $abmRol->buscar(['idrol' => $param['idrol']]);
             $obj = new MenuRol();
             $obj->setear($objMenu[0], $objRol[0]);
@@ -86,11 +86,10 @@ class MenuRolController
         $where = " true ";
         if ($param <> NULL) {
             if (isset($param['idmenu']))
-                $where .= " and idmenu =" . $param['idmenu'];
+                $where .= " and idmenu='" . $param['idmenu'] . "'";
             if (isset($param['idrol']))
-                $where .= " and idrol ='" . $param['idrol'] . "'";
+                $where .= " and idrol='" . $param['idrol'] . "'";
         }
-        var_dump($param);
         $arreglo = MenuRol::listar($where);
         return $arreglo;
     }

@@ -120,13 +120,13 @@ class CompraEstado
         if ($res > -1) {
             if ($res > 0) {
                 while ($row = $base->Registro()) {
-                    $obj = new Usuario();
+                    $obj = new CompraEstado();
                     $CompraController = new CompraController();
                     $objCompra = $CompraController->buscar(['idcompra' => $row['idcompra']]);
                     if (!empty($objCompra)) {
                         $objCompra = $objCompra[0];
                     }
-                    $CompraEstadoController = new CompraEstadoController();
+                    $CompraEstadoController = new CompraEstadoTipoController();
                     $objCompraestadotipo = $CompraEstadoController->buscar(['idcompraestadotipo' => $row['idcompraestadotipo']]);
                     if (!empty($objCompraestadotipo)) {
                         $objCompraestadotipo = $objCompraestadotipo[0];
