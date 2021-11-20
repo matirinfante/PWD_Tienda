@@ -136,4 +136,9 @@ class Session
         $_SESSION['carrito'] = $nuevoCarrito;
     }
 
+    public function eliminarCarrito()
+    {
+        unset($_SESSION['carrito']);
+    }
+
 }

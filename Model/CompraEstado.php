@@ -1,4 +1,5 @@
 <?php
+
 class CompraEstado
 {
     private $idcompraestado;
@@ -60,7 +61,12 @@ class CompraEstado
     {
         $resp = false;
         $base = new BaseDatos();
-        $sql = "INSERT INTO compraestado(idcompra,idcompraestadotipo,cefechaini,cefechafin)  VALUES('" . $this->getObjCompra()->getIdcompra() . "','" . $this->getObjCompraestadotipo()->getIdcompraestadotipo() . "','" . $this->getCefechaini() . "','" . $this->getCefechafin() . "');";
+        if ($this->getCefechafin() == null) {
+            $fechaFin = "null";
+        } else {
+            $fechaFin = '{$this->getCefechafin()}';
+        }
+        $sql = "INSERT INTO compraestado(idcompra,idcompraestadotipo,cefechaini,cefechafin)  VALUES('{$this->getObjCompra()->getIdcompra()}','{$this->getObjCompraestadotipo()->getIdcompraestadotipo()}','{$this->getCefechaini()}',$fechaFin);";
         if ($base->Iniciar()) {
             if ($elid = $base->Ejecutar($sql)) {
                 $this->setIdcompraestado($elid);
@@ -78,7 +84,12 @@ class CompraEstado
     {
         $resp = false;
         $base = new BaseDatos();
-        $sql = "UPDATE compraestado SET idcompra='" . $this->getObjCompra()->getIdcompra() . "', idcompraestadotipo= '" . $this->getObjCompraestadotipo()->getIdcompraestadotipo() . "', cefechaini= '" . $this->getCefechaini() . "', cefechafin= '" . $this->getCefechafin() . "' WHERE idcompraestado=" . $this->getIdcompraestado();
+        if ($this->getCefechafin() == null) {
+            $fechaFin = "null";
+        } else {
+            $fechaFin = "{$this->getCefechafin()}";
+        }
+        $sql = "UPDATE compraestado SET idcompra= '{$this->getObjCompra()->getIdcompra()}', idcompraestadotipo= '{$this->getObjCompraestadotipo()->getIdcompraestadotipo()}', cefechaini= '{$this->getCefechaini()}', cefechafin={$fechaFin}  WHERE idcompraestado='{$this->getIdcompraestado()}';";
         if ($base->Iniciar()) {
             if ($base->Ejecutar($sql)) {
                 $resp = true;
@@ -135,8 +146,6 @@ class CompraEstado
                     array_push($arreglo, $obj);
                 }
             }
-        } else {
-            $this->setmensajeoperacion("Compraestado->listar: " . $base->getError());
         }
         return $arreglo;
     }

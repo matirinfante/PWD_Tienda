@@ -18,7 +18,7 @@ if (!empty($datos)) {
 
 }
 
-include_once "../structure/Header.php";
+include_once "../structure/header.php";
 echo "<div class='container'>";
 
 if ($exito) {
@@ -27,5 +27,5 @@ if ($exito) {
     echo "<div class='alert alert-danger mt-5' role='alert'><h3>Ha ocurrido un error. Intentelo nuevamente</h3></div>";
 }
 
-include_once "../structure/Footer.php";
+include_once "../structure/footer.php";
 ?>

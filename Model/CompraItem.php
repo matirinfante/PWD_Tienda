@@ -1,4 +1,5 @@
 <?php
+
 class CompraItem
 {
     private $idcompraitem;
@@ -132,8 +133,6 @@ class CompraItem
                     array_push($arreglo, $obj);
                 }
             }
-        } else {
-            $this->setmensajeoperacion("Compraitem->listar: " . $base->getError());
         }
         return $arreglo;
     }

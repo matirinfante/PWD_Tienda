@@ -30,6 +30,7 @@ include_once("../structure/header.php");
             <th field="proprecio" width="50">Precio</th>
             <th field="proeditorial" width="70">Editorial</th>
             <th field="proautor" width="50">Autor</th>
+            <th field="proimagen" hidden>Imagen</th>
         </tr>
         </thead>
     </table>
@@ -105,6 +106,9 @@ include_once("../structure/header.php");
             </div>
             <div>
                 <input name="procantstock" value="procantstock" type="hidden">
+            </div>
+            <div>
+                <input name="proimagen" value="proimagen" type="hidden">
             </div>
         </form>
     </div>

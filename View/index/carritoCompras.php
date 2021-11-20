@@ -6,12 +6,25 @@ if (!$session->activa()) {
     header('location: login.php');
     exit();
 }
+$data = data_submitted();
 $controller = new ProductoController();
 $carrito = $session->getCarrito();
 include_once('../structure/header.php');
 ?>
 
 <div class="container mt-5">
+
+    <?php
+    if (isset($data['codexitocompra'])) {
+        if ($data['codexitocompra'] == 1) {
+            echo "<div class='alert alert-success mt-5' role='alert'><h3>¡Compra realizada con éxito!</h3></div>";
+        } else {
+            echo "<div class='alert alert-danger mt-5' role='alert'><h3>Ha ocurrido un error. Intentelo nuevamente</h3></div>";
+        }
+    }
+    ?>
+
+
     <h2>Mi carrito de compras</h2>
     <?php
     if ($carrito == null) {
@@ -48,8 +61,8 @@ include_once('../structure/header.php');
             ?>
         </table>
         <div class="d-flex justify-items-right">
-            <form action="../action/createCompra.php" method="post">
-                <button class="btn btn-dark" type="submit" value='<?php $carrito ?>'>Finalizar compra</button>
+            <form action="../action/carrito/createCompra.php" method="post">
+                <button class="btn btn-dark" type="submit">Finalizar compra</button>
             </form>
         </div>
         <?php

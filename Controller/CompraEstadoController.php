@@ -32,12 +32,11 @@ class CompraEstadoController
     private function seteadosCamposClaves($param)
     {
         $resp = false;
-        if (isset($param['idcompraestado']))
+
+        if (isset($param['idcompraestado'])) {
             $resp = true;
-        if (isset($param['idcompra']))
-            $resp = true;
-        if (isset($param['idcompraestadotipo']))
-            $resp = true;
+        }
+
         return $resp;
     }
 
@@ -68,14 +67,15 @@ class CompraEstadoController
 
     public function modificacion($param)
     {
-        //echo "Estoy en modificacion";
         $resp = false;
+
         if ($this->seteadosCamposClaves($param)) {
-            $elObjtCompraEstado = $this->cargarObjeto($param);
-            if ($elObjtCompraEstado != null and $elObjtCompraEstado->modificar()) {
+            $objCompraEstado = $this->cargarObjeto($param);
+            if ($objCompraEstado != null and $objCompraEstado->modificar()) {
                 $resp = true;
             }
         }
+
         return $resp;
     }
 
@@ -98,6 +98,8 @@ class CompraEstadoController
         $arreglo = CompraEstado::listar($where);
         return $arreglo;
     }
+
+
 }
 
 ?>

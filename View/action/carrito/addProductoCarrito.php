@@ -23,7 +23,7 @@ if (isset($data['idproducto'])) {
 if (!isset($data['cantidad'])) {
     $cantidad = 1;
 } else {
-    $cantidad = $data['cantidad'];
+    $cantidad = intval($data['cantidad']);
 }
 if ($exito) {
     foreach ($carrito as &$producto) {
@@ -39,7 +39,7 @@ if ($exito) {
     }
     $session->setCarrito($carrito);
     $carrito = $session->getCarrito();
-
 }
+
 header('location: ../../index/shop.php');
 exit();

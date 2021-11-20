@@ -22,7 +22,7 @@ while (!$encontrado && $i < count($listaEstados)) {
 }
 
 //Busco todas las compras registradas para el estado
-$compraEstados = $controllerEstado->buscar(null);
+$compraEstados = $controllerEstado->buscar(["idcompraestadotipo" => $tipoEstado->getIdcompraestadotipo()]);
 
 
 $formatResp = array();

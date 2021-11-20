@@ -1,6 +1,7 @@
 <?php
 
-class CompraController{
+class CompraController
+{
 
     private function cargarObjeto($param)
     {
@@ -8,12 +9,12 @@ class CompraController{
         if (array_key_exists('idcompra', $param) and array_key_exists('cofecha', $param)
             and array_key_exists('idusuario', $param)) {
 
-            
+
             $objUsuario = new Usuario();
-            $objUsuario->getIdUsuario($param['idusuario']); 
+            $objUsuario->setIdusuario($param['idusuario']);
             $objUsuario->cargar();
 
-           
+
             $obj = new Compra();
             $obj->setear($param['idcompra'], $param['cofecha'], $objUsuario);
         }
@@ -50,13 +51,14 @@ class CompraController{
         }
         return $resp;
     }
+
     public function baja($param)
     {
         $resp = false;
-        if ($this->seteadosCamposClaves($param)){
+        if ($this->seteadosCamposClaves($param)) {
             $elObjtCompra = $this->cargarObjetoConClave($param);
-            if ($elObjtCompra!=null){
-                if ($elObjtCompra->eliminar()){
+            if ($elObjtCompra != null) {
+                if ($elObjtCompra->eliminar()) {
                     $resp = true;
                 }
             }
@@ -75,6 +77,7 @@ class CompraController{
         }
         return $resp;
     }
+
     public function buscar($param)
     {
         $where = " true ";

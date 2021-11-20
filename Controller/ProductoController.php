@@ -174,4 +174,18 @@ class ProductoController
         return $arrayRespuesta;
     }
 
+    public function actualizarStock($param)
+    {
+        $resp = false;
+
+        if ($this->seteadosCamposClaves($param)) {
+            $obj = $this->buscar(["idproducto" => $param['idproducto']]);
+            if (isset($param['procantstock'])) {
+                $obj[0]->setProcantstock($param['procantstock']);
+                $resp = $obj[0]->modificar();
+            }
+        }
+        return $resp;
+    }
+
 }

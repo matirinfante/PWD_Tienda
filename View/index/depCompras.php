@@ -43,33 +43,31 @@ if ($session->getRolActivo() != "11") { ?>
                onclick="cancelarCompra()">Cancelar compra</a>
         </div>
 
-        <div id="dlg" class="easyui-dialog" style="width:400px"
-             data-options="closed:true,modal:true,border:'thin',buttons:'#dlg-buttons'">
-            <form id="fm" method="post" novalidate style="margin:0;padding:20px 50px">
-                <h3>Datos Usuario</h3>
-                <div style="margin-bottom:10px">
-                    <input name="usnombre" class="easyui-textbox" required="true" label="Nombre:" style="width:100%">
-                </div>
-                <div style="margin-bottom:10px">
-                    <input name="uspass" class="easyui-textbox" required="true" label="Contraseña:" style="width:100%">
-                </div>
-                <div style="margin-bottom:10px">
-                    <input name="usmail" class="easyui-textbox" required="true" label="E-mail:" style="width:100%">
-                </div>
-                <div>
-                    <input name="idusuario" value="idusuario" type="hidden">
-                </div>
-                <div>
-                    <input name="usdeshabilitado" value="usdeshabilitado" type="hidden">
+        <!-- cambiar estados -->
+        <div id="est1" class="easyui-dialog" style="width:400px"
+             data-options="closed:true,modal:true,border:'thin',buttons:'#est1-buttons'">
+            <form id="fm-est1" method="post" novalidate style="margin:0;padding:20px 50px">
+                <h3></h3>
+                <div style="margin-bottom:20px">
+                    <select class="easyui-combobox" name="idcompraestadotipo" label="Estado: " style="width:100%">
+                        <option value="2">ACEPTADA</option>
+                        <option value="4">CANCELADA</option>
+                    </select>
                 </div>
 
+                <div>
+                    <input name="idcompraestado" value="idcompraestado" type="hidden">
+                    <input name="idcompra" value="idcompra" type="hidden">
+                    <input name="cefechaini" value="cefechaini" type="hidden">
+                    <input name="cefechafin" value="cefechafin" type="hidden">
+                </div>
             </form>
         </div>
-        <div id="dlg-buttons">
-            <a href="javascript:void(0)" class="easyui-linkbutton c6" iconCls="icon-ok" onclick="guardarUsuario()"
-               style="width:90px">OK</a>
+        <div id="est1-buttons">
+            <a href="javascript:void(0)" class="easyui-linkbutton c6" iconCls="icon-ok" onclick="cambiarEstado1()"
+               style="width:90px">Aceptar</a>
             <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel"
-               onclick="javascript:$('#dlg').dialog('close')" style="width:90px">Cancelar</a>
+               onclick="javascript:$('#est1').dialog('close')" style="width:90px">Cancelar</a>
         </div>
     </div>
     </div>
@@ -83,15 +81,39 @@ if ($session->getRolActivo() != "11") { ?>
             }
         });
 
-        function editarUsuario() {
+        function cambiarEstado() {
             var row = $('#dg').datagrid('getSelected');
             if (row) {
-                $('#dlg').dialog('open').dialog('center').dialog('setTitle', 'Editar Usuario');
-                $('#fm').form('load', row);
-                url = '../action/admin/updateUsuario.php';
+                $('#est1').dialog('open').dialog('center').dialog('setTitle', 'Editar estado');
+                $('#fm-est1').form('load', row);
+                url = '../action/deposito/cambiarEstado1.php';
+
+
             }
         }
 
+        function cambiarEstado1() {
+            alert("hola");
+            $('#fm-est1').form('submit', {
+                url: url,
+                iframe: false,
+                onSubmit: function () {
+                    return $(this).form('validate');
+                },
+                success: function (result) {
+                    var result = eval('(' + result + ')');
+                    if (result.errorMsg) {
+                        $.messager.show({
+                            title: 'Error',
+                            msg: result.errorMsg
+                        });
+                    } else {
+                        $('#est1').dialog('close');        // close the dialog
+                        $('#dg').datagrid('reload');    // reload the user data
+                    }
+                }
+            });
+        }
     </script>
     <?php
 }
