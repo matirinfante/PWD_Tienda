@@ -30,7 +30,6 @@ include_once "../structure/header.php";
                                     <img src="<?php echo '../images/' . $producto[0]->getProimagen() . ".jpg"; ?>"
                                          alt="" class="w-100">
                                 </div>
-
                             </div>
                         </div>
                     </div>

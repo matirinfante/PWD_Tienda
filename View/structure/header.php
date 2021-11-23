@@ -23,6 +23,7 @@
     <link rel="stylesheet" type="text/css" href="../../Util/EasyUI/themes/color.css">
     <script type="text/javascript" src="../../Util/EasyUI/jquery.min.js"></script>
     <script type="text/javascript" src="../../Util/EasyUI/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="https://www.jeasyui.com/easyui/datagrid-detailview.js"></script>
 </head>
 <body id="page-top" class="d-flex flex-column min-vh-100">
 <!-- Navigation-->

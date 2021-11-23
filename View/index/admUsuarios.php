@@ -52,8 +52,8 @@ if ($session->getRolActivo() != "1") { ?>
                 <div style="margin-bottom:10px">
                     <input name="usnombre" class="easyui-textbox" required="true" label="Nombre:" style="width:100%">
                 </div>
-                <div style="margin-bottom:10px">
-                    <input name="uspass" class="easyui-textbox" required="true" label="Contraseña:" style="width:100%">
+                <div>
+                    <input name="uspass" class="easyui-textbox" type="hidden">
                 </div>
                 <div style="margin-bottom:10px">
                     <input name="usmail" class="easyui-textbox" required="true" label="E-mail:" style="width:100%">

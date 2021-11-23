@@ -12,17 +12,18 @@ $controllerUsuario = new UsuarioController();
 $listaEstados = $controllerTipo->buscar(null);
 $encontrado = false;
 $i = 0;
-while (!$encontrado && $i < count($listaEstados)) {
+/*while (!$encontrado && $i < count($listaEstados)) {
     if ($listaEstados[$i]->getIdcompraestadotipo() == $data['idcompraestadotipo']) {
         $encontrado = true;
         $tipoEstado = $listaEstados[$i];
     } else {
         $i++;
     }
-}
+}*/
 
 //Busco todas las compras registradas para el estado
-$compraEstados = $controllerEstado->buscar(["idcompraestadotipo" => $tipoEstado->getIdcompraestadotipo()]);
+//$compraEstados = $controllerEstado->buscar(["idcompraestadotipo" => $tipoEstado->getIdcompraestadotipo()]);
+$compraEstados = $controllerEstado->buscar(null);
 
 
 $formatResp = array();
@@ -39,7 +40,8 @@ foreach ($compraEstados as $compra) {
 
     $elemento['idcompraestado'] = $compra->getIdcompraestado();
     $elemento['idcompra'] = $compra->getObjcompra()->getIdcompra();
-    $elemento['cetdescripcion'] = $tipoEstado->getCetdescripcion();
+    $elemento['idcompraestadotipo'] = $compra->getObjcompraestadotipo()->getIdcompraestadotipo();
+    $elemento['cetdescripcion'] = $compra->getObjCompraestadotipo()->getCetdescripcion();
     $elemento['cefechaini'] = $compra->getCefechaini();
     $elemento['cefechafin'] = $compra->getCefechafin();
     $elemento['usnombre'] = $usuarioCompra->getUsnombre();

@@ -87,7 +87,7 @@ class CompraEstado
         if ($this->getCefechafin() == null) {
             $fechaFin = "null";
         } else {
-            $fechaFin = "{$this->getCefechafin()}";
+            $fechaFin = "'{$this->getCefechafin()}'";
         }
         $sql = "UPDATE compraestado SET idcompra= '{$this->getObjCompra()->getIdcompra()}', idcompraestadotipo= '{$this->getObjCompraestadotipo()->getIdcompraestadotipo()}', cefechaini= '{$this->getCefechaini()}', cefechafin={$fechaFin}  WHERE idcompraestado='{$this->getIdcompraestado()}';";
         if ($base->Iniciar()) {

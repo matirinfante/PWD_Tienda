@@ -7,7 +7,7 @@ if (!$session->activa()) {
     exit();
 }
 include_once "../structure/header.php";
-if ($session->getRolActivo() != "11") { ?>
+if ($session->getRolActivo() != "12") { ?>
     <div class="container">
         <div class="alert alert-danger" role="alert">
             ACCESO PROHIBIDO
@@ -21,7 +21,7 @@ if ($session->getRolActivo() != "11") { ?>
     ?>
     <div class="col-8 mt-2 mb-2">
         <table id="dg" title="Compras iniciadas" class="easyui-datagrid"
-               url="../action/deposito/listarCompras.php"
+               url="../action/cliente/listarMisCompras.php"
                toolbar="#toolbar" pagination="true"
                rownumbers="true" fitColumns="true" singleSelect="true">
             <thead>
@@ -37,31 +37,8 @@ if ($session->getRolActivo() != "11") { ?>
             </thead>
         </table>
         <div id="toolbar">
-            <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-edit" plain="true"
-               onclick="cambiarEstado()">Cambiar estado</a>
             <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-remove" plain="true"
                onclick="cancelarCompra()">Cancelar compra</a>
-        </div>
-
-        <!-- cambiar estados -->
-        <div id="est1" class="easyui-dialog" style="width:400px"
-             data-options="closed:true,modal:true,border:'thin',buttons:'#est1-buttons'">
-            <form id="fm-est1" method="post" novalidate style="margin:0;padding:20px 50px">
-                <h3>Está seguro?</h3>
-                <div>
-                    <input name="idcompraestadotipo" value="idcompraestadotipo" type="hidden">
-                    <input name="idcompraestado" value="idcompraestado" type="hidden">
-                    <input name="idcompra" value="idcompra" type="hidden">
-                    <input name="cefechaini" value="cefechaini" type="hidden">
-                    <input name="cefechafin" value="cefechafin" type="hidden">
-                </div>
-            </form>
-        </div>
-        <div id="est1-buttons">
-            <a href="javascript:void(0)" class="easyui-linkbutton c6" iconCls="icon-ok" onclick="cambiarEstado1()"
-               style="width:90px">Aceptar</a>
-            <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel"
-               onclick="javascript:$('#est1').dialog('close')" style="width:90px">Cancelar</a>
         </div>
 
         <!-- cancelar compra -->
@@ -91,51 +68,19 @@ if ($session->getRolActivo() != "11") { ?>
     <script type="text/javascript">
         var url;
 
-        /*$('#dg').datagrid({
+        $('#dg').datagrid({
             queryParams: {
-                idcompraestadotipo: 1
+                idusuario: <?php echo $session->getUsuario()->getIdusuario();?>
             }
-        });*/
+        });
 
-        function cambiarEstado() {
-            var row = $('#dg').datagrid('getSelected');
-            if (row) {
-                $('#est1').dialog('open').dialog('center').dialog('setTitle', 'Editar estado');
-                $('#fm-est1').form('load', row);
-                url = '../action/deposito/cambiarEstado1.php';
-
-
-            }
-        }
-
-        function cambiarEstado1() {
-            $('#fm-est1').form('submit', {
-                url: url,
-                iframe: false,
-                onSubmit: function () {
-                    return $(this).form('validate');
-                },
-                success: function (result) {
-                    var result = eval('(' + result + ')');
-                    if (result.errorMsg) {
-                        $.messager.show({
-                            title: 'Error',
-                            msg: result.errorMsg
-                        });
-                    } else {
-                        $('#est1').dialog('close');        // close the dialog
-                        $('#dg').datagrid('reload');    // reload the user data
-                    }
-                }
-            });
-        }
 
         function cancelarCompra() {
             var row = $('#dg').datagrid('getSelected');
             if (row) {
                 $('#cancel').dialog('open').dialog('center').dialog('setTitle', 'Cancelar compra');
                 $('#fm-cancel').form('load', row);
-                url = '../action/deposito/cancelarCompra.php';
+                url = '../action/cliente/cancelarCompra.php';
 
 
             }
