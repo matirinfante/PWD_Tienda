@@ -3,17 +3,13 @@
 class Session
 {
 
-    /**
-     * Constructor de la clase que inicia la sesión
-     */
+
     public function __construct()
     {
         session_start();
     }
 
-    /**
-     * Actualiza las variables de sesión con los valores ingresados
-     */
+
     public function iniciar($usNombre, $psw)
     {
         $ini = false;
@@ -24,9 +20,7 @@ class Session
         return $ini;
     }
 
-    /**
-     *  Valida si la sesión actual tiene usuario y psw válidos. Devuelve true o false.
-     */
+
     public function validar($usNombre, $psw)
     {
         $valido = false;
@@ -46,9 +40,7 @@ class Session
         return $valido;
     }
 
-    /**
-     * Devuelve true o false si la sesión está activa o no.
-     */
+
     public function activa()
     {
         $activa = false;
@@ -58,9 +50,7 @@ class Session
         return $activa;
     }
 
-    /**
-     * Devuelve el usuario logeado
-     */
+
     public function getUsuario()
     {
         $usuario = null;
@@ -72,9 +62,6 @@ class Session
         return $usuario;
     }
 
-    /**
-     * Devuelve el rol del usuario logeado
-     */
     public function getRol()
     {
         $roles = array();
@@ -113,9 +100,7 @@ class Session
         return $ret;
     }
 
-    /**
-     * Cierra la sesión actual
-     */
+
     public function cerrar()
     {
         $close = false;
