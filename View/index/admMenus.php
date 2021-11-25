@@ -9,7 +9,7 @@ if (!$session->activa()) {
 include_once "../structure/header.php";
 if ($session->getRolActivo() != "1") { ?>
     <div class="container">
-        <div class="alert alert-danger" role="alert">
+        <div class="alert alert-danger p-3" role="alert">
             ACCESO PROHIBIDO
         </div>
     </div>
@@ -19,8 +19,9 @@ if ($session->getRolActivo() != "1") { ?>
     include_once("../structure/menuLateral.php");
 
     ?>
-    <div class="col-9 mt-2 mb-2">
-        <table id="dg" title="Menu" class="easyui-datagrid" style="width:800px;height:400px"
+    <div class="col-9 p-2 mt-2 mb-2">
+        <h2 class="text-center">Administración menu</h2>
+        <table id="dg" title="Menu" class="easyui-datagrid"
                url="../action/admin/Menu/listarMenu.php"
                toolbar="#toolbar" pagination="true"
                rownumbers="true" fitColumns="true" singleSelect="true">
@@ -75,7 +76,7 @@ if ($session->getRolActivo() != "1") { ?>
 
         </br>
 
-        <table id="dgRol" title="MenuRol" class="easyui-datagrid" style="width:700px;height:250px"
+        <table id="dgRol" title="MenuRol" class="easyui-datagrid"
                url="../action/admin/Menu/listarMenuRol.php"
                toolbar="#toolbar2" pagination="true"
                rownumbers="true" fitColumns="true" singleSelect="true">

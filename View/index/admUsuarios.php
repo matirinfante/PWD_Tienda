@@ -9,7 +9,7 @@ if (!$session->activa()) {
 include_once "../structure/header.php";
 if ($session->getRolActivo() != "1") { ?>
     <div class="container">
-        <div class="alert alert-danger" role="alert">
+        <div class="alert alert-danger p-3" role="alert">
             ACCESO PROHIBIDO
         </div>
     </div>

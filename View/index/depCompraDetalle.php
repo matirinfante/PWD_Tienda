@@ -7,9 +7,9 @@ if (!$session->activa()) {
     exit();
 }
 include_once "../structure/header.php";
-if ($session->getRolActivo() != "11") { ?>
+if ($session->getRolActivo() != "2") { ?>
     <div class="container">
-        <div class="alert alert-danger" role="alert">
+        <div class="alert alert-danger p-3" role="alert">
             ACCESO PROHIBIDO
         </div>
     </div>
@@ -19,7 +19,8 @@ if ($session->getRolActivo() != "11") { ?>
     include_once("../structure/menuLateral.php");
 
     ?>
-    <div class="col-9 mt-2 mb-2">
+    <div class="col-9 p-2 mt-2 mb-2">
+        <h2 class="text-center">Ver compras</h2>
         <table id="dg" style="height: auto"
                url="../action/deposito/listarCompraDetalle.php"
                title="Compra detalle"

@@ -37,7 +37,11 @@ class Session
                 $_SESSION["idUsuario"] = $list[0]->getIdusuario();
                 $_SESSION["rolActivo"] = $this->getRol()[0]->getIdrol(); //asigna como rol activo el primer rol del conjunto de roles
                 $valido = true;
+            } else {
+                $error = "Usuario deshabilitado.";
             }
+        } else {
+            $error = "Usuario/contraseña inválida.";
         }
         return $valido;
     }

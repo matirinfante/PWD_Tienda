@@ -62,7 +62,7 @@ if (!empty($carrito)) {
             }
 
         } else {
-            $nuevaCompra->baja();
+            $controllerCompra->baja(["idcompra" => $nuevaCompra->getIdcompra()]);
         }
     }
 } else {

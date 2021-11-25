@@ -20,7 +20,7 @@ class BaseDatos extends PDO
         $this->database = 'bdcarritocompras';
         $this->user = 'root';
         $this->pass = '';
-        $this->debug = true;
+        $this->debug = false;
         $this->error = "";
         $this->sql = "";
         $this->indice = 0;

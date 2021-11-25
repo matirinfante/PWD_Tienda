@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
     <meta name="description" content=""/>
     <meta name="author" content=""/>
-    <title>TiendaNombre</title>
+    <title>TorreDeD4Dos - Online shop</title>
     <!-- Favicon-->
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico"/>
     <!-- Font Awesome icons (free version)-->
@@ -29,7 +29,8 @@
 <!-- Navigation-->
 <nav class="navbar navbar-expand-lg bg-secondary text-uppercase" id="mainNav">
     <div class="container">
-        <a class="navbar-brand" href="../index/index.php">TiendaNombre</a>
+        <a class="navbar-brand" href="../index/index.php">TORRE<span style="color:black">DE</span><span
+                    style="color:darkorange">D4</span>DOS</a>
         <button class="navbar-toggler text-uppercase font-weight-bold bg-primary text-white rounded" type="button"
                 data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive"
                 aria-expanded="false" aria-label="Toggle navigation">
@@ -38,12 +39,15 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ms-auto">
-                <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="#">Novedades</a>
-                </li>
-                <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="#">Nosotros</a>
+                <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded"
+                                                     href="../index/nosotros.php">Nosotros</a>
                 </li>
                 <?php
                 if ($session->activa()) {
+                    if ($session->getRolActivo() == "3") {
+                        echo "<li class='nav-item mx-0 mx-lg-1'><a class='nav-link py-3 px-0 px-lg-3 rounded'
+                                                     href='../index/carritoCompras.php'><i class='fas fa-shopping-cart'></i></a></li>";
+                    }
                     $user = $session->getUsuario();
                     $username = $user->getusnombre();
                     echo "<li class='nav-item mx-0 mx-lg-1'><a class='nav-link py-3 px-0 px-lg-3 rounded'
@@ -70,23 +74,15 @@
 
 
                     <!-- ICONO CERRAR SESION -->
-                    <div class="btn-group">
-                        <button type="button" class="btn btn-secondary">
-                            <a href="../action/cerrarSesion.php" style="color:#fff;">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
-                                     class="bi bi-box-arrow-left" viewBox="0 0 16 16">
-                                    <path fill-rule="evenodd"
-                                          d="M6 12.5a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5h-8a.5.5 0 0 0-.5.5v2a.5.5 0 0 1-1 0v-2A1.5 1.5 0 0 1 6.5 2h8A1.5 1.5 0 0 1 16 3.5v9a1.5 1.5 0 0 1-1.5 1.5h-8A1.5 1.5 0 0 1 5 12.5v-2a.5.5 0 0 1 1 0v2z"/>
-                                    <path fill-rule="evenodd"
-                                          d="M.146 8.354a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L1.707 7.5H10.5a.5.5 0 0 1 0 1H1.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3z"/>
-                                </svg>
-                            </a>
-                        </button>
-                    </div>
+                    <li class='nav-item mx-0 mx-lg-1'><a class='nav-link py-3 px-0 px-lg-3 rounded'
+                                                         href='../action/cerrarSesion.php'><i
+                                    class="fas fa-sign-out-alt"></i></a></li>
                     <?php
                 } else {
                     echo '<li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded"
                                                      href="../index/login.php">Ingresar</a></li>';
+                    echo '<li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded"
+                                                     href="../index/registro.php">Registrarse</a></li>';
                 }
                 ?>
 

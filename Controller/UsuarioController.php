@@ -2,7 +2,8 @@
 
 class UsuarioController
 {
-    public function cargarObjeto($param){
+    public function cargarObjeto($param)
+    {
 
         $obj = null;
 
@@ -16,7 +17,8 @@ class UsuarioController
         return $obj;
     }
 
-    private function cargarObjetoConClave($param){
+    private function cargarObjetoConClave($param)
+    {
         $obj = null;
 
         if (isset($param['idusuario'])) {
@@ -27,7 +29,8 @@ class UsuarioController
         return $obj;
     }
 
-    private function seteadosCamposClaves($param){
+    private function seteadosCamposClaves($param)
+    {
 
         $resp = false;
         if (isset($param['idusuario']))
@@ -35,8 +38,9 @@ class UsuarioController
             $resp = true;
         return $resp;
     }
-    
-    public function insertar($param){
+
+    public function insertar($param)
+    {
 
         $resp = false;
         $elObjtUsuario = new Usuario();
@@ -49,7 +53,8 @@ class UsuarioController
         return $resp;
     }
 
-    public function eliminar($param){
+    public function eliminar($param)
+    {
 
         $resp = false;
 
@@ -65,7 +70,8 @@ class UsuarioController
         return $resp;
     }
 
-    public function modificacion($param){
+    public function modificacion($param)
+    {
         $resp = false;
         if ($this->seteadosCamposClaves($param)) {
 
@@ -99,5 +105,15 @@ class UsuarioController
         $arreglo = Usuario::listar($where);
 
         return $arreglo;
+    }
+
+    public function vacia()
+    {
+        $resp = false;
+        $userTemp = new Usuario();
+        if (empty($userTemp->listar())) {
+            $resp = true;
+        }
+        return $resp;
     }
 }

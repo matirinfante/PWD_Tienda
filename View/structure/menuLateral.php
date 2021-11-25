@@ -5,9 +5,6 @@ $rolActivo = $session->getRolActivo();
 $data = array('idrol' => $rolActivo);
 $menu = $menuRolController->buscar($data);
 
-if (!empty($menu)) {
-    $listaMenu = $menuController->buscar(["idpadre" => $menu[0]->getObjmenu()->getIdmenu(), "medeshabilitado" => null]);
-}
 ?>
 
 <div class="row">
@@ -17,20 +14,30 @@ if (!empty($menu)) {
             <span class="fs-4">Dashboard</span>
         </a>
         <hr>
-        <ul class="nav nav-pills flex-column mb-auto">
-            <?php
-            foreach ($listaMenu as $submenu) {
+        <?php
+        if (!empty($menu)) {
+            foreach ($menu as $me) {
+                $listaMenu = $menuController->buscar(["idpadre" => $me->getObjmenu()->getIdmenu(), "medeshabilitado" => "null"]);
                 ?>
-                <li class="nav-item p-2">
-                    <a href="../index/<?php echo $submenu->getMedescripcion() ?>.php" class="nav-link active"
-                       aria-current="page">
-                        <svg class="bi me-2" width="16" height="16">
-                        </svg>
-                        <?php echo $submenu->getMenombre() ?>
-                    </a>
-                </li>
+                <ul class="nav nav-pills flex-column mb-auto">
+                    <?php echo $me->getObjMenu()->getMenombre(); ?>
+                    <?php
+                    foreach ($listaMenu as $submenu) {
+                        ?>
+                        <li class="nav-item p-2">
+                            <a href="../index/<?php echo $submenu->getMedescripcion() ?>.php" class="nav-link active"
+                               aria-current="page">
+                                <svg class="bi me-2" width="16" height="16">
+                                </svg>
+                                <?php echo $submenu->getMenombre() ?>
+                            </a>
+                        </li>
+                        <?php
+                    }
+                    ?>
+                </ul>
                 <?php
             }
-            ?>
-        </ul>
+        }
+        ?>
     </div>

@@ -9,168 +9,184 @@ if (!$session->activa()) {
 
 
 include_once("../structure/header.php");
-
-
-?>
-
-    <h2>Adminitrar Stock</h2>
-
-    <!-- ---TABLA USUARIOS--- -->
-
-    <table id="dg" title="Productos" class="easyui-datagrid"
-           url="../action/deposito/listarProductos.php" toolbar="#toolbar" pagination="true" rownumbers="true"
-           fitColumns="true"
-           singleSelect="true" style="width:100%;height:350px;">
-        <thead>
-        <tr>
-            <!--<th field="idproducto" width="20">ID</th> -->
-            <th field="pronombre" width="150">Nombre</th>
-            <th field="prodetalle" width="120">Detalle</th>
-            <th field="procantstock" width="60">Cantidad</th>
-            <th field="proprecio" width="50">Precio</th>
-            <th field="proeditorial" width="70">Editorial</th>
-            <th field="proautor" width="50">Autor</th>
-            <th field="proimagen" hidden>Imagen</th>
-        </tr>
-        </thead>
-    </table>
-    <div id="toolbar">
-        <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-add" plain="true"
-           onclick="nuevoProducto()">Nuevo Producto</a>
-        <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-edit" plain="true"
-           onclick="editarProducto()">Editar Producto</a>
-        <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-remove" plain="true"
-           onclick="destroyProducto()">Eliminar</a>
-        <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-edit" plain="true"
-           onclick="modificarImagen()">Cargar Imagen</a>
-        <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="editarStock()">Editar
-            Stock</a>
+if ($session->getRolActivo() != "2") { ?>
+    <div class="container">
+        <div class="alert alert-danger p-3" role="alert">
+            ACCESO PROHIBIDO
+        </div>
     </div>
+    <?php
+} else {
 
-    <div id="dlg" class="easyui-dialog" style="width:400px"
-         data-options="closed:true,modal:true,border:'thin',buttons:'#dlg-buttons'">
-        <form id="fm" method="post" novalidate style="margin:0;padding:20px 50px">
-            <h3></h3>
-            <div style="margin-bottom:10px">
-                <input name="pronombre" class="easyui-textbox" required="true" label="Nombre:" style="width:100%">
-            </div>
-            <div style="margin-bottom:10px">
-                <input name="prodetalle" class="easyui-textbox" required="true" label="Descripcion:" style="width:100%">
-            </div>
-            <div style="margin-bottom:10px">
-                <input name="procantstock" class="easyui-textbox" required="true" label="Cant. Stock:"
-                       style="width:100%">
-            </div>
-            <div style="margin-bottom:10px">
-                <input name="proprecio" class="easyui-textbox" required="true" label="Precio:" style="width:100%">
-            </div>
-            <div style="margin-bottom:10px">
-                <input name="proeditorial" class="easyui-textbox" required="true" label="Editorial:" style="width:100%">
-            </div>
-            <div style="margin-bottom:10px">
-                <input name="proautor" class="easyui-textbox" required="true" label="Autor:" style="width:100%">
-            </div>
-            <div>
-                <input name="idproducto" value="idproducto" type="hidden">
-            </div>
-        </form>
+    include_once("../structure/menuLateral.php");
+
+    ?>
+    <div class="col-9 p-2 mt-2 mb-2">
+        <h2 class="text-center">Administrar Stock</h2>
+
+        <!-- ---TABLA USUARIOS--- -->
+
+        <table id="dg" title="Productos" class="easyui-datagrid"
+               url="../action/deposito/listarProductos.php" toolbar="#toolbar" pagination="true" rownumbers="true"
+               fitColumns="true"
+               singleSelect="true" style="width:100%;height:350px;">
+            <thead>
+            <tr>
+                <!--<th field="idproducto" width="20">ID</th> -->
+                <th field="pronombre" width="150">Nombre</th>
+                <th field="prodetalle" width="120">Detalle</th>
+                <th field="procantstock" width="60">Cantidad</th>
+                <th field="proprecio" width="50">Precio</th>
+                <th field="proeditorial" width="70">Editorial</th>
+                <th field="proautor" width="50">Autor</th>
+                <th field="proimagen" hidden>Imagen</th>
+            </tr>
+            </thead>
+        </table>
+        <div id="toolbar">
+            <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-add" plain="true"
+               onclick="nuevoProducto()">Nuevo Producto</a>
+            <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-edit" plain="true"
+               onclick="editarProducto()">Editar Producto</a>
+            <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-remove" plain="true"
+               onclick="destroyProducto()">Eliminar</a>
+            <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-edit" plain="true"
+               onclick="modificarImagen()">Cargar Imagen</a>
+            <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-edit" plain="true"
+               onclick="editarStock()">Editar
+                Stock</a>
+        </div>
+
+        <div id="dlg" class="easyui-dialog" style="width:400px"
+             data-options="closed:true,modal:true,border:'thin',buttons:'#dlg-buttons'">
+            <form id="fm" method="post" novalidate style="margin:0;padding:20px 50px">
+                <h3></h3>
+                <div style="margin-bottom:10px">
+                    <input name="pronombre" class="easyui-textbox" required="true" label="Nombre:" style="width:100%">
+                </div>
+                <div style="margin-bottom:10px">
+                    <input name="prodetalle" class="easyui-textbox" required="true" label="Descripcion:"
+                           style="width:100%">
+                </div>
+                <div style="margin-bottom:10px">
+                    <input name="procantstock" class="easyui-textbox" required="true" label="Cant. Stock:"
+                           style="width:100%">
+                </div>
+                <div style="margin-bottom:10px">
+                    <input name="proprecio" class="easyui-textbox" required="true" label="Precio:" style="width:100%">
+                </div>
+                <div style="margin-bottom:10px">
+                    <input name="proeditorial" class="easyui-textbox" required="true" label="Editorial:"
+                           style="width:100%">
+                </div>
+                <div style="margin-bottom:10px">
+                    <input name="proautor" class="easyui-textbox" required="true" label="Autor:" style="width:100%">
+                </div>
+                <div>
+                    <input name="idproducto" value="idproducto" type="hidden">
+                </div>
+            </form>
+        </div>
+        <div id="dlg-buttons">
+            <a href="javascript:void(0)" class="easyui-linkbutton c6" iconCls="icon-ok" onclick="guardarProducto()"
+               style="width:90px">Aceptar</a>
+            <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel"
+               onclick="javascript:$('#dlg').dialog('close')" style="width:90px">Cancelar</a>
+        </div>
+
+        <div id="dlg2" class="easyui-dialog" style="width:400px"
+             data-options="closed:true,modal:true,border:'thin',buttons:'#dlg2-buttons'">
+            <form id="fm2" method="post" novalidate style="margin:0;padding:20px 50px">
+                <h3></h3>
+                <div style="margin-bottom:10px">
+                    <input name="pronombre" class="easyui-textbox" required="true" label="Nombre:" style="width:100%">
+                </div>
+                <div style="margin-bottom:10px">
+                    <input name="prodetalle" class="easyui-textbox" required="true" label="Descripcion:"
+                           style="width:100%">
+                </div>
+                <div style="margin-bottom:10px">
+                    <input name="proprecio" class="easyui-textbox" required="true" label="Precio:" style="width:100%">
+                </div>
+                <div style="margin-bottom:10px">
+                    <input name="proeditorial" class="easyui-textbox" required="true" label="Editorial:"
+                           style="width:100%">
+                </div>
+                <div style="margin-bottom:10px">
+                    <input name="proautor" class="easyui-textbox" required="true" label="Autor:" style="width:100%">
+                </div>
+                <div>
+                    <input name="idproducto" value="idproducto" type="hidden">
+                </div>
+                <div>
+                    <input name="procantstock" value="procantstock" type="hidden">
+                </div>
+                <div>
+                    <input name="proimagen" value="proimagen" type="hidden">
+                </div>
+            </form>
+        </div>
+        <div id="dlg2-buttons">
+            <a href="javascript:void(0)" class="easyui-linkbutton c6" iconCls="icon-ok" onclick="guardarProducto2()"
+               style="width:90px">Aceptar</a>
+            <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel"
+               onclick="javascript:$('#dlg2').dialog('close')" style="width:90px">Cancelar</a>
+        </div>
+
+        <div id="setImagen" class="easyui-dialog" style="width:400px"
+             data-options="closed:true,modal:true,border:'thin',buttons:'#setImagen-buttons'">
+            <form id="fmImagen" method="post" novalidate style="margin:0;padding:20px 50px"
+                  enctype="multipart/form-data"
+                  method="post">
+                <h4>Cargar Imagen</h4>
+                <div class="col">
+                    <input type="file" name="imagen" id="imagen" required>
+
+                    <label for="imagen" class="form-label"><strong>Formato permitido: .jpg</strong></label>
+                    <div class="invalid-feedback">Seleccione una imagen de su equipo</div>
+                </div>
+                <div>
+                    <input name="idproducto" value="idproducto" type="hidden">
+                </div>
+
+
+            </form>
+        </div>
+        <div id="setImagen-buttons">
+            <a href="javascript:void(0)" class="easyui-linkbutton c6" iconCls="icon-ok" onclick="guardarProductoImg()"
+               style="width:90px">Aceptar</a>
+            <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel"
+               onclick="javascript:$('#setImagen').dialog('close')" style="width:90px">Cancelar</a>
+        </div>
+
+        <div id="stock" class="easyui-dialog" style="width:400px"
+             data-options="closed:true,modal:true,border:'thin',buttons:'#stock-buttons'">
+            <form id="fmStock" method="post" novalidate style="margin:0;padding:20px 50px">
+                <h3></h3>
+                <div style="margin-bottom:10px">
+                    <input name="procantstock" class="easyui-textbox" required="true" label="Cant. Stock:"
+                           style="width:100%">
+                </div>
+
+                <div>
+                    <input name="idproducto" value="idproducto" type="hidden">
+                    <input name="pronombre" value="pronombre" type="hidden">
+                    <input name="prodetalle" value="prodetalle" type="hidden">
+                    <input name="proprecio" value="proprecio" type="hidden">
+                    <input name="proeditorial" value="proeditorial" type="hidden">
+                    <input name="proautor" value="proautor" type="hidden">
+                    <input name="proimagen" value="proimagen" type="hidden">
+                </div>
+            </form>
+        </div>
+        <div id="stock-buttons">
+            <a href="javascript:void(0)" class="easyui-linkbutton c6" iconCls="icon-ok" onclick="guardarStock()"
+               style="width:90px">Aceptar</a>
+            <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel"
+               onclick="javascript:$('#stock').dialog('close')" style="width:90px">Cancelar</a>
+        </div>
     </div>
-    <div id="dlg-buttons">
-        <a href="javascript:void(0)" class="easyui-linkbutton c6" iconCls="icon-ok" onclick="guardarProducto()"
-           style="width:90px">Aceptar</a>
-        <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel"
-           onclick="javascript:$('#dlg').dialog('close')" style="width:90px">Cancelar</a>
     </div>
-
-    <div id="dlg2" class="easyui-dialog" style="width:400px"
-         data-options="closed:true,modal:true,border:'thin',buttons:'#dlg2-buttons'">
-        <form id="fm2" method="post" novalidate style="margin:0;padding:20px 50px">
-            <h3></h3>
-            <div style="margin-bottom:10px">
-                <input name="pronombre" class="easyui-textbox" required="true" label="Nombre:" style="width:100%">
-            </div>
-            <div style="margin-bottom:10px">
-                <input name="prodetalle" class="easyui-textbox" required="true" label="Descripcion:" style="width:100%">
-            </div>
-            <div style="margin-bottom:10px">
-                <input name="proprecio" class="easyui-textbox" required="true" label="Precio:" style="width:100%">
-            </div>
-            <div style="margin-bottom:10px">
-                <input name="proeditorial" class="easyui-textbox" required="true" label="Editorial:" style="width:100%">
-            </div>
-            <div style="margin-bottom:10px">
-                <input name="proautor" class="easyui-textbox" required="true" label="Autor:" style="width:100%">
-            </div>
-            <div>
-                <input name="idproducto" value="idproducto" type="hidden">
-            </div>
-            <div>
-                <input name="procantstock" value="procantstock" type="hidden">
-            </div>
-            <div>
-                <input name="proimagen" value="proimagen" type="hidden">
-            </div>
-        </form>
-    </div>
-    <div id="dlg2-buttons">
-        <a href="javascript:void(0)" class="easyui-linkbutton c6" iconCls="icon-ok" onclick="guardarProducto2()"
-           style="width:90px">Aceptar</a>
-        <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel"
-           onclick="javascript:$('#dlg2').dialog('close')" style="width:90px">Cancelar</a>
-    </div>
-
-    <div id="setImagen" class="easyui-dialog" style="width:400px"
-         data-options="closed:true,modal:true,border:'thin',buttons:'#setImagen-buttons'">
-        <form id="fmImagen" method="post" novalidate style="margin:0;padding:20px 50px" enctype="multipart/form-data"
-              method="post">
-            <h4>Cargar Imagen</h4>
-            <div class="col">
-                <input type="file" name="imagen" id="imagen" required>
-
-                <label for="imagen" class="form-label"><strong>Formato permitido: .jpg</strong></label>
-                <div class="invalid-feedback">Seleccione una imagen de su equipo</div>
-            </div>
-            <div>
-                <input name="idproducto" value="idproducto" type="hidden">
-            </div>
-
-
-        </form>
-    </div>
-    <div id="setImagen-buttons">
-        <a href="javascript:void(0)" class="easyui-linkbutton c6" iconCls="icon-ok" onclick="guardarProductoImg()"
-           style="width:90px">Aceptar</a>
-        <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel"
-           onclick="javascript:$('#setImagen').dialog('close')" style="width:90px">Cancelar</a>
-    </div>
-
-    <div id="stock" class="easyui-dialog" style="width:400px"
-         data-options="closed:true,modal:true,border:'thin',buttons:'#stock-buttons'">
-        <form id="fmStock" method="post" novalidate style="margin:0;padding:20px 50px">
-            <h3></h3>
-            <div style="margin-bottom:10px">
-                <input name="procantstock" class="easyui-textbox" required="true" label="Cant. Stock:"
-                       style="width:100%">
-            </div>
-
-            <div>
-                <input name="idproducto" value="idproducto" type="hidden">
-                <input name="pronombre" value="pronombre" type="hidden">
-                <input name="prodetalle" value="prodetalle" type="hidden">
-                <input name="proprecio" value="proprecio" type="hidden">
-                <input name="proeditorial" value="proeditorial" type="hidden">
-                <input name="proautor" value="proautor" type="hidden">
-                <input name="proimagen" value="proimagen" type="hidden">
-            </div>
-        </form>
-    </div>
-    <div id="stock-buttons">
-        <a href="javascript:void(0)" class="easyui-linkbutton c6" iconCls="icon-ok" onclick="guardarStock()"
-           style="width:90px">Aceptar</a>
-        <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel"
-           onclick="javascript:$('#stock').dialog('close')" style="width:90px">Cancelar</a>
-    </div>
-
     <script type="text/javascript">
 
         var url;
@@ -333,6 +349,9 @@ include_once("../structure/header.php");
             }
         }
     </script>
+    <?php
+}
+?>
 
 <?php
 include_once("../structure/footer.php");

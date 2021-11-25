@@ -115,7 +115,7 @@ class Compra
     {
         $resp = false;
         $base = new BaseDatos();
-        $sql = "UPDATE compra SET cofecha='{$this->getCofecha()}', idusuario = '{$this->getIdusuario()}' WHERE idcompra=" . $this->getIdcompra();
+        $sql = "UPDATE compra SET cofecha='{$this->getCofecha()}', idusuario = '{$this->getObjUsuario()->getIdusuario()}' WHERE idcompra=" . $this->getIdcompra();
 
         if ($base->Iniciar()) {
             if ($base->Ejecutar($sql)) {
@@ -134,7 +134,7 @@ class Compra
     {
         $resp = false;
         $base = new BaseDatos();
-        $sql = "DELETE FROM compra WHERE idcompra =" . $this->getIdcompra();
+        $sql = "DELETE FROM compra WHERE idcompra ='{$this->getIdcompra()}'";
         if ($base->Iniciar()) {
             if ($base->Ejecutar($sql)) {
                 $resp = true;

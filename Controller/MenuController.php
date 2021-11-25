@@ -16,8 +16,6 @@ class MenuController
             }
             if (!isset($param['medeshabilitado'])) {
                 $param['medeshabilitado'] = null;
-            } else {
-                $param['medeshabilitado'] = date("Y-m-d H:i:s");
             }
             if (!isset($param['medescripcion'])) {
                 $param['medescripcion'] = "";
@@ -51,7 +49,7 @@ class MenuController
     {
         $resp = false;
         $param['idmenu'] = null;
-        $param['medeshabilitado'] = null;
+        $param['medeshabilitado'] = "0000-00-00 00:00:00";
         $elObjtMenu = $this->cargarObjeto($param);
         if ($elObjtMenu != null and $elObjtMenu->insertar()) {
             $resp = true;

@@ -26,6 +26,6 @@ if ($exito) {
 } else {
     echo "<div class='alert alert-danger mt-5' role='alert'><h3>Ha ocurrido un error. Intentelo nuevamente</h3></div>";
 }
-
+echo "</div></div>";
 include_once "../structure/footer.php";
 ?>
