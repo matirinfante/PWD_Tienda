@@ -6,8 +6,10 @@ if (!$session->activa()) {
     header('location: login.php');
     exit();
 }
+$pagina = "cliCompras";
+$controllerPermiso = new GestorPermisos();
 include_once "../structure/header.php";
-if ($session->getRolActivo() != "3") { ?>
+if (!$controllerPermiso->tienePermiso($session->getRolActivo(), $pagina)) { ?>
     <div class="container">
         <div class="alert alert-danger p-3" role="alert">
             ACCESO PROHIBIDO

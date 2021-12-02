@@ -11,7 +11,6 @@ $datos = data_submitted();
 
 $controller = new ProductoController();
 $producto = $controller->buscar($datos);
-#var_dump($producto);
 
 include_once "../structure/header.php";
 ?>

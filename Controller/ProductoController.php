@@ -188,4 +188,18 @@ class ProductoController
         return $resp;
     }
 
+    public function agregarProducto($datos)
+    {
+        $datos['idproducto'] = null;
+        $datos['proimagen'] = '19660c40c3239e4d65d8e5a9d03b6f19';
+        $result = $this->alta($datos);
+        if ($result) {
+            $response['status'] = 1;
+            $response['msg'] = 'Se guardo correctamente';
+        } else {
+            $response['status'] = 0;
+            $response['msg'] = 'Fallo al guardar';
+        }
+        return $response;
+    }
 }

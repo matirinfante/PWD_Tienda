@@ -2,12 +2,15 @@
 include_once("../../config.php");
 $session = new Session();
 $controller = new RolController();
+$controllerPermiso = new GestorPermisos();
 if (!$session->activa()) {
     header('location: login.php');
     exit();
 }
+$pag = "admUsuarios";
+$rolActivo = $session->getRolActivo();
 include_once "../structure/header.php";
-if ($session->getRolActivo() != "1") { ?>
+if (!$controllerPermiso->tienePermiso($rolActivo, $pag)) { ?>
     <div class="container">
         <div class="alert alert-danger p-3" role="alert">
             ACCESO PROHIBIDO

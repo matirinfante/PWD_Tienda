@@ -6,8 +6,10 @@ if (!$session->activa()) {
     header('location: login.php');
     exit();
 }
+$pagina = "admMenus";
+$controllerPermiso = new GestorPermisos();
 include_once "../structure/header.php";
-if ($session->getRolActivo() != "1") { ?>
+if (!$controllerPermiso->tienePermiso($session->getRolActivo(), $pagina)) { ?>
     <div class="container">
         <div class="alert alert-danger p-3" role="alert">
             ACCESO PROHIBIDO

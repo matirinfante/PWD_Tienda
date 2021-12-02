@@ -19,7 +19,6 @@ if (isset($data['idproducto']) && !empty($carrito)) {
         }
         $i++;
     }
-    var_dump($carrito);
     $session->setCarrito($carrito);
 }
 header('location: ../../index/carritoCompras.php');

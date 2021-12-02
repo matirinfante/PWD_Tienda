@@ -7,9 +7,10 @@ if (!$session->activa()) {
     exit();
 }
 
-
-include_once("../structure/header.php");
-if ($session->getRolActivo() != "2") { ?>
+$pagina = "depProductos";
+$controllerPermiso = new GestorPermisos();
+include_once "../structure/header.php";
+if (!$controllerPermiso->tienePermiso($session->getRolActivo(), $pagina)) { ?>
     <div class="container">
         <div class="alert alert-danger p-3" role="alert">
             ACCESO PROHIBIDO
@@ -282,7 +283,6 @@ if ($session->getRolActivo() != "2") { ?>
                     return $(this).form('validate');
                 },
                 success: function (result) {
-                    alert("entra");
                     var result = eval('(' + result + ')');
                     if (result.errorMsg) {
                         $.messager.show({
