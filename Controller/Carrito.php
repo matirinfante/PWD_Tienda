@@ -107,4 +107,40 @@ class Carrito
         }
         return $resp;
     }
+
+    public function agregarCarrito($data, $carrito)
+    {
+
+        $controllerProducto = new ProductoController();
+        $exito = true;
+        $repetido = false;
+        if (isset($data['idproducto'])) {
+            $resp = $controllerProducto->buscar(['idproducto' => $data['idproducto']]);
+            if (empty($resp)) {
+                $exito = false;
+                $error = "Producto inválido";
+            }
+        }
+
+
+        if (!isset($data['cantidad'])) {
+            $cantidad = 1;
+        } else {
+            $cantidad = intval($data['cantidad']);
+        }
+        if ($exito) {
+            foreach ($carrito as &$producto) {
+                if ($producto[0]['idproducto'] == $data['idproducto']) {
+                    $producto[0]['cantidad'] += $cantidad;
+                    $repetido = true;
+                }
+            }
+
+            if (!$repetido) {
+                $nuevoElemento = array(["idproducto" => $data['idproducto'], "cantidad" => $cantidad]);
+                array_push($carrito, $nuevoElemento);
+            }
+            $_SESSION['carrito'] = $carrito;
+        }
+    }
 }
